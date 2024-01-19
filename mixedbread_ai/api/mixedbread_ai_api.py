@@ -23,8 +23,8 @@ try:
 except ImportError:
     from typing_extensions import Annotated
 
-from mixedbread_ai.models.embeddings200_response import Embeddings200Response
 from mixedbread_ai.models.embeddings_request import EmbeddingsRequest
+from mixedbread_ai.models.embeddings_response import EmbeddingsResponse
 
 from mixedbread_ai.api_client import ApiClient
 from mixedbread_ai.api_response import ApiResponse
@@ -45,7 +45,7 @@ class MixedbreadAiApi:
 
 
     @validate_call
-    def embeddings(
+    async def embeddings(
         self,
         embeddings_request: EmbeddingsRequest,
         _request_timeout: Union[
@@ -60,7 +60,7 @@ class MixedbreadAiApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Embeddings200Response:
+    ) -> EmbeddingsResponse:
         """Create embeddings
 
         This endpoint allows you to post text data and receive embeddings in response. The embeddings are generated using the model specified in the request body.
@@ -98,7 +98,7 @@ class MixedbreadAiApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Embeddings200Response",
+            '200': "EmbeddingsResponse",
             '400': "ErrorResponse",
             '401': "ErrorResponse",
             '402': "ErrorResponse",
@@ -106,11 +106,11 @@ class MixedbreadAiApi:
             '429': "ErrorResponse",
             '500': "ErrorResponse",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -118,7 +118,7 @@ class MixedbreadAiApi:
 
 
     @validate_call
-    def embeddings_with_http_info(
+    async def embeddings_with_http_info(
         self,
         embeddings_request: EmbeddingsRequest,
         _request_timeout: Union[
@@ -133,7 +133,7 @@ class MixedbreadAiApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Embeddings200Response]:
+    ) -> ApiResponse[EmbeddingsResponse]:
         """Create embeddings
 
         This endpoint allows you to post text data and receive embeddings in response. The embeddings are generated using the model specified in the request body.
@@ -171,7 +171,7 @@ class MixedbreadAiApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Embeddings200Response",
+            '200': "EmbeddingsResponse",
             '400': "ErrorResponse",
             '401': "ErrorResponse",
             '402': "ErrorResponse",
@@ -179,11 +179,11 @@ class MixedbreadAiApi:
             '429': "ErrorResponse",
             '500': "ErrorResponse",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -191,7 +191,7 @@ class MixedbreadAiApi:
 
 
     @validate_call
-    def embeddings_without_preload_content(
+    async def embeddings_without_preload_content(
         self,
         embeddings_request: EmbeddingsRequest,
         _request_timeout: Union[
@@ -244,7 +244,7 @@ class MixedbreadAiApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Embeddings200Response",
+            '200': "EmbeddingsResponse",
             '400': "ErrorResponse",
             '401': "ErrorResponse",
             '402': "ErrorResponse",
@@ -252,7 +252,7 @@ class MixedbreadAiApi:
             '429': "ErrorResponse",
             '500': "ErrorResponse",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )

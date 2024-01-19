@@ -1,18 +1,23 @@
 [tool.poetry]
 name = "mixedbread_ai"
-version = "1.0.4"
-description = "mixedbread-ai"
-authors = ["mixedbread-ai <info@mixedbread.ai>"]
+version = "1.1.0"
+description = "mixedbread.ai (https://www.mixedbread.ai)"
+authors = ["mixedbread-ai <support@mixedbread.ai>"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/mixedbread-ai/python-sdk.git"
-keywords = ["Embeddings", "NLP", "mixedbread-ai"]
+keywords = ["Embeddings", "NLP", "mixedbread.ai"]
 include = ["mixedbread_ai/py.typed"]
+packages = [
+    { include = "mixedbread_ai" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"
 urllib3 = ">= 1.25.3"
 python-dateutil = ">=2.8.2"
+aiohttp = ">= 3.8.4"
+aiohttp-retry = ">= 2.8.3"
 pydantic = ">=2"
 typing-extensions = ">=4.7.1"
 

@@ -26,13 +26,14 @@ try:
 except ImportError:
     from typing_extensions import Self
 
-class Embeddings200ResponseUsage(BaseModel):
+class ModelUsage(BaseModel):
     """
-    Embeddings200ResponseUsage
+    ModelUsage
     """ # noqa: E501
-    prompt_tokens: Optional[StrictInt] = Field(default=None, description="The number of prompt tokens used.")
-    total_tokens: Optional[StrictInt] = Field(default=None, description="The total number of tokens used.")
-    __properties: ClassVar[List[str]] = ["prompt_tokens", "total_tokens"]
+    prompt_tokens: StrictInt = Field(description="The number of prompt tokens used.")
+    total_tokens: StrictInt = Field(description="The total number of tokens used.")
+    completion_tokens: Optional[StrictInt] = Field(default=None, description="The number of completion tokens used.")
+    __properties: ClassVar[List[str]] = ["prompt_tokens", "total_tokens", "completion_tokens"]
 
     model_config = {
         "populate_by_name": True,
@@ -52,7 +53,7 @@ class Embeddings200ResponseUsage(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of Embeddings200ResponseUsage from a JSON string"""
+        """Create an instance of ModelUsage from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -75,7 +76,7 @@ class Embeddings200ResponseUsage(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Dict) -> Self:
-        """Create an instance of Embeddings200ResponseUsage from a dict"""
+        """Create an instance of ModelUsage from a dict"""
         if obj is None:
             return None
 
@@ -84,7 +85,8 @@ class Embeddings200ResponseUsage(BaseModel):
 
         _obj = cls.model_validate({
             "prompt_tokens": obj.get("prompt_tokens"),
-            "total_tokens": obj.get("total_tokens")
+            "total_tokens": obj.get("total_tokens"),
+            "completion_tokens": obj.get("completion_tokens")
         })
         return _obj
 

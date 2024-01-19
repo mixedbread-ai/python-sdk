@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**input** | [**EmbeddingsRequestInput**](EmbeddingsRequestInput.md) |  | [optional] 
-**model** | **str** | Specifies the model to be used for generating embeddings. | [optional] 
+**model** | **str** | Specifies the model to be used for generating embeddings. | 
+**input** | **List[str]** | A list of text strings for which the embeddings should be generated. | 
 **instruction** | **str** | Required only for instruction based models. Specifies the instruction for generating embeddings. | [optional] 
 **normalized** | **bool** | Specifies whether the embeddings should be normalized. | [optional] 
 

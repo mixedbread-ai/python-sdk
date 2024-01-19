@@ -21,21 +21,19 @@ import json
 from typing import Any, ClassVar, Dict, List
 from pydantic import BaseModel, StrictStr
 from pydantic import Field
-from mixedbread_ai.models.embeddings200_response_data_inner import Embeddings200ResponseDataInner
-from mixedbread_ai.models.embeddings200_response_usage import Embeddings200ResponseUsage
+from mixedbread_ai.models.model_usage import ModelUsage
 try:
     from typing import Self
 except ImportError:
     from typing_extensions import Self
 
-class Embeddings200Response(BaseModel):
+class ModelBaseResponse(BaseModel):
     """
-    Embeddings200Response
+    ModelBaseResponse
     """ # noqa: E501
     model: StrictStr = Field(description="The embeddings model used.")
-    data: List[Embeddings200ResponseDataInner]
-    usage: Embeddings200ResponseUsage
-    __properties: ClassVar[List[str]] = ["model", "data", "usage"]
+    usage: ModelUsage
+    __properties: ClassVar[List[str]] = ["model", "usage"]
 
     model_config = {
         "populate_by_name": True,
@@ -55,7 +53,7 @@ class Embeddings200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of Embeddings200Response from a JSON string"""
+        """Create an instance of ModelBaseResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,13 +72,6 @@ class Embeddings200Response(BaseModel):
             },
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in data (list)
-        _items = []
-        if self.data:
-            for _item in self.data:
-                if _item:
-                    _items.append(_item.to_dict())
-            _dict['data'] = _items
         # override the default output from pydantic by calling `to_dict()` of usage
         if self.usage:
             _dict['usage'] = self.usage.to_dict()
@@ -88,7 +79,7 @@ class Embeddings200Response(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Dict) -> Self:
-        """Create an instance of Embeddings200Response from a dict"""
+        """Create an instance of ModelBaseResponse from a dict"""
         if obj is None:
             return None
 
@@ -97,8 +88,7 @@ class Embeddings200Response(BaseModel):
 
         _obj = cls.model_validate({
             "model": obj.get("model"),
-            "data": [Embeddings200ResponseDataInner.from_dict(_item) for _item in obj.get("data")] if obj.get("data") is not None else None,
-            "usage": Embeddings200ResponseUsage.from_dict(obj.get("usage")) if obj.get("usage") is not None else None
+            "usage": ModelUsage.from_dict(obj.get("usage")) if obj.get("usage") is not None else None
         })
         return _obj
 

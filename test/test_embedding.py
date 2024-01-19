@@ -15,10 +15,10 @@
 import unittest
 import datetime
 
-from mixedbread_ai.models.embeddings200_response_usage import Embeddings200ResponseUsage
+from mixedbread_ai.models.embedding import Embedding
 
-class TestEmbeddings200ResponseUsage(unittest.TestCase):
-    """Embeddings200ResponseUsage unit test stubs"""
+class TestEmbedding(unittest.TestCase):
+    """Embedding unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,26 +26,34 @@ class TestEmbeddings200ResponseUsage(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> Embeddings200ResponseUsage:
-        """Test Embeddings200ResponseUsage
+    def make_instance(self, include_optional) -> Embedding:
+        """Test Embedding
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `Embeddings200ResponseUsage`
+        # uncomment below to create an instance of `Embedding`
         """
-        model = Embeddings200ResponseUsage()
+        model = Embedding()
         if include_optional:
-            return Embeddings200ResponseUsage(
-                prompt_tokens = 56,
-                total_tokens = 56
+            return Embedding(
+                embedding = [
+                    1.337
+                    ],
+                index = 56,
+                truncated = True
             )
         else:
-            return Embeddings200ResponseUsage(
+            return Embedding(
+                embedding = [
+                    1.337
+                    ],
+                index = 56,
+                truncated = True,
         )
         """
 
-    def testEmbeddings200ResponseUsage(self):
-        """Test Embeddings200ResponseUsage"""
+    def testEmbedding(self):
+        """Test Embedding"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

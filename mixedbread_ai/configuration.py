@@ -14,8 +14,6 @@
 
 import copy
 import logging
-import multiprocessing
-import os
 import sys
 import urllib3
 
@@ -26,8 +24,6 @@ JSON_SCHEMA_VALIDATION_KEYWORDS = {
     'minimum', 'exclusiveMinimum', 'maxLength',
     'minLength', 'pattern', 'maxItems', 'minItems'
 }
-
-API_KEY_NAME = 'MIXEDBREADAI_API_KEY'
 
 class Configuration:
     """This class contains various settings of the API client.
@@ -81,8 +77,7 @@ conf = mixedbread_ai.Configuration(
     _default = None
 
     def __init__(self, host=None,
-                 api_key=None,
-                 api_key_prefix=None,
+                 api_key=None, api_key_prefix=None,
                  username=None, password=None,
                  access_token=None,
                  server_index=None, server_variables=None,
@@ -106,18 +101,14 @@ conf = mixedbread_ai.Configuration(
         """Temp file folder for downloading files
         """
         # Authentication Settings
-        self.api_key = {
-            API_KEY_NAME: api_key,
-        }
-        if not self.api_key[API_KEY_NAME]:
-            self.api_key = {
-                API_KEY_NAME: os.environ.get(API_KEY_NAME, None),
-            }
+        self.api_key = {}
+        if api_key:
+            self.api_key = api_key
         """dict to store API key(s)
         """
-        self.api_key_prefix = {
-            API_KEY_NAME: "Bearer",
-        }
+        self.api_key_prefix = {}
+        if api_key_prefix:
+            self.api_key_prefix = api_key_prefix
         """dict to store API prefix (e.g. Bearer)
         """
         self.refresh_api_key_hook = None
@@ -175,12 +166,9 @@ conf = mixedbread_ai.Configuration(
            Set this to the SNI value expected by the server.
         """
 
-        self.connection_pool_maxsize = multiprocessing.cpu_count() * 5
-        """urllib3 connection pool's maximum number of connections saved
-           per pool. urllib3 uses 1 connection as default value, but this is
-           not the best value when you are making a lot of possibly parallel
-           requests to the same host, which is often the case here.
-           cpu_count * 5 is used as default value to increase performance.
+        self.connection_pool_maxsize = 100
+        """This value is passed to the aiohttp to limit simultaneous connections.
+           Default values is 100, None means no-limit.
         """
 
         self.proxy = None
