@@ -15,10 +15,10 @@
 import unittest
 import datetime
 
-from mixedbread_ai.models.embeddings200_response_data_inner import Embeddings200ResponseDataInner
+from mixedbread_ai.models.embeddings_response_usage import EmbeddingsResponseUsage
 
-class TestEmbeddings200ResponseDataInner(unittest.TestCase):
-    """Embeddings200ResponseDataInner unit test stubs"""
+class TestEmbeddingsResponseUsage(unittest.TestCase):
+    """EmbeddingsResponseUsage unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,29 +26,29 @@ class TestEmbeddings200ResponseDataInner(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> Embeddings200ResponseDataInner:
-        """Test Embeddings200ResponseDataInner
+    def make_instance(self, include_optional) -> EmbeddingsResponseUsage:
+        """Test EmbeddingsResponseUsage
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `Embeddings200ResponseDataInner`
+        # uncomment below to create an instance of `EmbeddingsResponseUsage`
         """
-        model = Embeddings200ResponseDataInner()
+        model = EmbeddingsResponseUsage()
         if include_optional:
-            return Embeddings200ResponseDataInner(
-                embedding = [
-                    1.337
-                    ],
-                index = 56,
-                was_truncated = True
+            return EmbeddingsResponseUsage(
+                prompt_tokens = 56,
+                total_tokens = 56,
+                completion_tokens = 56
             )
         else:
-            return Embeddings200ResponseDataInner(
+            return EmbeddingsResponseUsage(
+                prompt_tokens = 56,
+                total_tokens = 56,
         )
         """
 
-    def testEmbeddings200ResponseDataInner(self):
-        """Test Embeddings200ResponseDataInner"""
+    def testEmbeddingsResponseUsage(self):
+        """Test EmbeddingsResponseUsage"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

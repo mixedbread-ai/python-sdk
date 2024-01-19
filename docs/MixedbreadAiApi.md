@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **embeddings**
-> Embeddings200Response embeddings(embeddings_request)
+> EmbeddingsResponse embeddings(embeddings_request)
 
 Create embeddings
 
@@ -22,8 +22,8 @@ This endpoint allows you to post text data and receive embeddings in response. T
 import time
 import os
 import mixedbread_ai
-from mixedbread_ai.models.embeddings200_response import Embeddings200Response
 from mixedbread_ai.models.embeddings_request import EmbeddingsRequest
+from mixedbread_ai.models.embeddings_response import EmbeddingsResponse
 from mixedbread_ai.rest import ApiException
 from pprint import pprint
 
@@ -45,14 +45,14 @@ configuration.api_key['MIXEDBREADAI_API_KEY'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['MIXEDBREADAI_API_KEY'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with mixedbread_ai.ApiClient(configuration) as api_client:
+async with mixedbread_ai.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = mixedbread_ai.MixedbreadAiApi(api_client)
     embeddings_request = mixedbread_ai.EmbeddingsRequest() # EmbeddingsRequest | 
 
     try:
         # Create embeddings
-        api_response = api_instance.embeddings(embeddings_request)
+        api_response = await api_instance.embeddings(embeddings_request)
         print("The response of MixedbreadAiApi->embeddings:\n")
         pprint(api_response)
     except Exception as e:
@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Embeddings200Response**](Embeddings200Response.md)
+[**EmbeddingsResponse**](EmbeddingsResponse.md)
 
 ### Authorization
 

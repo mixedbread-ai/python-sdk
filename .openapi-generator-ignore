@@ -22,10 +22,10 @@
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
 
-mixedbread_ai/configuration.py
 pyproject.toml
 mixedbread_ai_README.md
 .travis.yml
+.gitlab-ci.yml
 git_push.sh
 requirements.txt
 setup.cfg
@@ -34,3 +34,5 @@ test-requirements.txt
 tox.ini
 README.md
 .github
+mixedbread_ai/__init__.py
+mixedbread_ai/mixedbread_ai_client.py

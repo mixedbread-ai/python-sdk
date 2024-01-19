@@ -18,22 +18,25 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from pydantic import BaseModel, StrictBool, StrictFloat, StrictInt
+from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, StrictBool, StrictStr
 from pydantic import Field
+from mixedbread_ai.models.embedding import Embedding
+from mixedbread_ai.models.model_usage import ModelUsage
 try:
     from typing import Self
 except ImportError:
     from typing_extensions import Self
 
-class Embeddings200ResponseDataInner(BaseModel):
+class EmbeddingsResponse(BaseModel):
     """
-    Embeddings200ResponseDataInner
+    EmbeddingsResponse
     """ # noqa: E501
-    embedding: Optional[List[Union[StrictFloat, StrictInt]]] = Field(default=None, description="The generated embeddings.")
-    index: Optional[StrictInt] = Field(default=None, description="Index of the request text the embedding corresponds to.")
-    was_truncated: Optional[StrictBool] = Field(default=None, description="Indicates if the text was truncated for the model.")
-    __properties: ClassVar[List[str]] = ["embedding", "index", "was_truncated"]
+    normalized: StrictBool = Field(description="Indicates if the embeddings were normalized.")
+    data: List[Embedding]
+    model: StrictStr = Field(description="The embeddings model used.")
+    usage: ModelUsage
+    __properties: ClassVar[List[str]] = ["normalized", "data", "model", "usage"]
 
     model_config = {
         "populate_by_name": True,
@@ -53,7 +56,7 @@ class Embeddings200ResponseDataInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of Embeddings200ResponseDataInner from a JSON string"""
+        """Create an instance of EmbeddingsResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,11 +75,21 @@ class Embeddings200ResponseDataInner(BaseModel):
             },
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in data (list)
+        _items = []
+        if self.data:
+            for _item in self.data:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['data'] = _items
+        # override the default output from pydantic by calling `to_dict()` of usage
+        if self.usage:
+            _dict['usage'] = self.usage.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Dict) -> Self:
-        """Create an instance of Embeddings200ResponseDataInner from a dict"""
+        """Create an instance of EmbeddingsResponse from a dict"""
         if obj is None:
             return None
 
@@ -84,9 +97,10 @@ class Embeddings200ResponseDataInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "embedding": obj.get("embedding"),
-            "index": obj.get("index"),
-            "was_truncated": obj.get("was_truncated")
+            "normalized": obj.get("normalized"),
+            "data": [Embedding.from_dict(_item) for _item in obj.get("data")] if obj.get("data") is not None else None,
+            "model": obj.get("model"),
+            "usage": ModelUsage.from_dict(obj.get("usage")) if obj.get("usage") is not None else None
         })
         return _obj
 

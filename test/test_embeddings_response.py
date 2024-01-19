@@ -15,10 +15,10 @@
 import unittest
 import datetime
 
-from mixedbread_ai.models.embeddings200_response import Embeddings200Response
+from mixedbread_ai.models.embeddings_response import EmbeddingsResponse
 
-class TestEmbeddings200Response(unittest.TestCase):
-    """Embeddings200Response unit test stubs"""
+class TestEmbeddingsResponse(unittest.TestCase):
+    """EmbeddingsResponse unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,48 +26,52 @@ class TestEmbeddings200Response(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> Embeddings200Response:
-        """Test Embeddings200Response
+    def make_instance(self, include_optional) -> EmbeddingsResponse:
+        """Test EmbeddingsResponse
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `Embeddings200Response`
+        # uncomment below to create an instance of `EmbeddingsResponse`
         """
-        model = Embeddings200Response()
+        model = EmbeddingsResponse()
         if include_optional:
-            return Embeddings200Response(
-                model = '',
+            return EmbeddingsResponse(
+                normalized = True,
                 data = [
-                    mixedbread_ai.models.embeddings_200_response_data_inner.embeddings_200_response_data_inner(
+                    mixedbread_ai.models.embedding.Embedding(
                         embedding = [
                             1.337
                             ], 
                         index = 56, 
-                        was_truncated = True, )
+                        truncated = True, )
                     ],
-                usage = mixedbread_ai.models.embeddings_200_response_usage.embeddings_200_response_usage(
+                model = '',
+                usage = mixedbread_ai.models.embeddings_response_usage.EmbeddingsResponse_usage(
                     prompt_tokens = 56, 
-                    total_tokens = 56, )
+                    total_tokens = 56, 
+                    completion_tokens = 56, )
             )
         else:
-            return Embeddings200Response(
-                model = '',
+            return EmbeddingsResponse(
+                normalized = True,
                 data = [
-                    mixedbread_ai.models.embeddings_200_response_data_inner.embeddings_200_response_data_inner(
+                    mixedbread_ai.models.embedding.Embedding(
                         embedding = [
                             1.337
                             ], 
                         index = 56, 
-                        was_truncated = True, )
+                        truncated = True, )
                     ],
-                usage = mixedbread_ai.models.embeddings_200_response_usage.embeddings_200_response_usage(
+                model = '',
+                usage = mixedbread_ai.models.embeddings_response_usage.EmbeddingsResponse_usage(
                     prompt_tokens = 56, 
-                    total_tokens = 56, ),
+                    total_tokens = 56, 
+                    completion_tokens = 56, ),
         )
         """
 
-    def testEmbeddings200Response(self):
-        """Test Embeddings200Response"""
+    def testEmbeddingsResponse(self):
+        """Test EmbeddingsResponse"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

@@ -14,9 +14,9 @@
 
 
 # import models into model package
-from mixedbread_ai.models.embeddings200_response import Embeddings200Response
-from mixedbread_ai.models.embeddings200_response_data_inner import Embeddings200ResponseDataInner
-from mixedbread_ai.models.embeddings200_response_usage import Embeddings200ResponseUsage
+from mixedbread_ai.models.embedding import Embedding
 from mixedbread_ai.models.embeddings_request import EmbeddingsRequest
-from mixedbread_ai.models.embeddings_request_input import EmbeddingsRequestInput
+from mixedbread_ai.models.embeddings_response import EmbeddingsResponse
 from mixedbread_ai.models.error_response import ErrorResponse
+from mixedbread_ai.models.model_base_response import ModelBaseResponse
+from mixedbread_ai.models.model_usage import ModelUsage

@@ -18,24 +18,22 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, StrictBool, StrictFloat, StrictInt
 from pydantic import Field
-from typing_extensions import Annotated
 try:
     from typing import Self
 except ImportError:
     from typing_extensions import Self
 
-class EmbeddingsRequest(BaseModel):
+class Embedding(BaseModel):
     """
-    EmbeddingsRequest
+    Embedding
     """ # noqa: E501
-    model: StrictStr = Field(description="Specifies the model to be used for generating embeddings.")
-    input: Annotated[List[StrictStr], Field(min_length=1, max_length=256)] = Field(description="A list of text strings for which the embeddings should be generated.")
-    instruction: Optional[StrictStr] = Field(default=None, description="Required only for instruction based models. Specifies the instruction for generating embeddings.")
-    normalized: Optional[StrictBool] = Field(default=None, description="Specifies whether the embeddings should be normalized.")
-    __properties: ClassVar[List[str]] = ["model", "input", "instruction", "normalized"]
+    embedding: List[Union[StrictFloat, StrictInt]] = Field(description="The generated embeddings.")
+    index: StrictInt = Field(description="Index of the request text the embedding corresponds to.")
+    truncated: Optional[StrictBool] = Field(default=None, description="Indicates if the text was truncated for the model.")
+    __properties: ClassVar[List[str]] = ["embedding", "index", "truncated"]
 
     model_config = {
         "populate_by_name": True,
@@ -55,7 +53,7 @@ class EmbeddingsRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of EmbeddingsRequest from a JSON string"""
+        """Create an instance of Embedding from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,7 +76,7 @@ class EmbeddingsRequest(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Dict) -> Self:
-        """Create an instance of EmbeddingsRequest from a dict"""
+        """Create an instance of Embedding from a dict"""
         if obj is None:
             return None
 
@@ -86,10 +84,9 @@ class EmbeddingsRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "model": obj.get("model"),
-            "input": obj.get("input"),
-            "instruction": obj.get("instruction"),
-            "normalized": obj.get("normalized")
+            "embedding": obj.get("embedding"),
+            "index": obj.get("index"),
+            "truncated": obj.get("truncated")
         })
         return _obj
 

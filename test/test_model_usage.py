@@ -15,10 +15,10 @@
 import unittest
 import datetime
 
-from mixedbread_ai.models.embeddings_request_input import EmbeddingsRequestInput
+from mixedbread_ai.models.model_usage import ModelUsage
 
-class TestEmbeddingsRequestInput(unittest.TestCase):
-    """EmbeddingsRequestInput unit test stubs"""
+class TestModelUsage(unittest.TestCase):
+    """ModelUsage unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,24 +26,29 @@ class TestEmbeddingsRequestInput(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> EmbeddingsRequestInput:
-        """Test EmbeddingsRequestInput
+    def make_instance(self, include_optional) -> ModelUsage:
+        """Test ModelUsage
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `EmbeddingsRequestInput`
+        # uncomment below to create an instance of `ModelUsage`
         """
-        model = EmbeddingsRequestInput()
+        model = ModelUsage()
         if include_optional:
-            return EmbeddingsRequestInput(
+            return ModelUsage(
+                prompt_tokens = 56,
+                total_tokens = 56,
+                completion_tokens = 56
             )
         else:
-            return EmbeddingsRequestInput(
+            return ModelUsage(
+                prompt_tokens = 56,
+                total_tokens = 56,
         )
         """
 
-    def testEmbeddingsRequestInput(self):
-        """Test EmbeddingsRequestInput"""
+    def testModelUsage(self):
+        """Test ModelUsage"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 
