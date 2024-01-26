@@ -37,7 +37,7 @@ from mixedbread_ai import MixedbreadAi
 
 mxbai = MixedbreadAi(
     api_key="{YOUR_API_KEY}",
-    base_path="https://api.mixedbread.ai",
+    base_url="https://api.mixedbread.ai",
     timeout=30,
     headers={"X-Custom-Header": "foobar"},
     ...
