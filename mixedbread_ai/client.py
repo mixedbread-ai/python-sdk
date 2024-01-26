@@ -10,7 +10,7 @@ class MixedbreadAi:
 
     def __init__(self,
                  api_key: Optional[str] = None,
-                 base_path: str = "https://api.mixedbread.ai",
+                 base_url: str = "https://api.mixedbread.ai",
                  headers: Optional[Dict[str, str]] = None,
                  cookies: Optional[Dict[str, str]] = None,
                  timeout: Optional[float] = None,
@@ -26,11 +26,11 @@ class MixedbreadAi:
             if api_key is None:
                 raise Exception("Missing API key. Please set MIXEDBREAD_API_KEY environment variable or pass it to the constructor.")
 
-        if base_path is None:
+        if base_url is None:
             raise Exception("Missing basePath")
 
         self._client = AuthenticatedClient(
-            base_url=base_path,
+            base_url=base_url,
             token=api_key,
             headers={
                 "User-Agent": "@mixedbread-ai/python-sdk",
