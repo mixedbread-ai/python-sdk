@@ -14,12 +14,14 @@ T = TypeVar("T", bound="EmbeddingsResponse")
 class EmbeddingsResponse:
     """
     Attributes:
+        object_ (str): The object type.
         normalized (bool): Indicates if the embeddings were normalized.
         data (List['Embedding']):
         model (str): The embeddings model used.
         usage (ModelUsage):
     """
 
+    object_: str
     normalized: bool
     data: List["Embedding"]
     model: str
@@ -27,6 +29,7 @@ class EmbeddingsResponse:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        object_ = self.object_
         normalized = self.normalized
         data = []
         for componentsschemas_embeddings_list_item_data in self.data:
@@ -41,6 +44,7 @@ class EmbeddingsResponse:
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
+                "object": object_,
                 "normalized": normalized,
                 "data": data,
                 "model": model,
@@ -56,6 +60,8 @@ class EmbeddingsResponse:
         from ..models.model_usage import ModelUsage
 
         d = src_dict.copy()
+        object_ = d.pop("object")
+
         normalized = d.pop("normalized")
 
         data = []
@@ -70,6 +76,7 @@ class EmbeddingsResponse:
         usage = ModelUsage.from_dict(d.pop("usage"))
 
         embeddings_response = cls(
+            object_=object_,
             normalized=normalized,
             data=data,
             model=model,

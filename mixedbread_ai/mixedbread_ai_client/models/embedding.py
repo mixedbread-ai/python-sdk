@@ -11,17 +11,20 @@ T = TypeVar("T", bound="Embedding")
 class Embedding:
     """
     Attributes:
+        object_ (str): The object type.
         embedding (List[float]): The generated embeddings.
         index (int): Index of the request text the embedding corresponds to.
         truncated (Union[Unset, bool]): Indicates if the text was truncated for the model.
     """
 
+    object_: str
     embedding: List[float]
     index: int
     truncated: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        object_ = self.object_
         embedding = self.embedding
 
         index = self.index
@@ -31,6 +34,7 @@ class Embedding:
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
+                "object": object_,
                 "embedding": embedding,
                 "index": index,
             }
@@ -43,6 +47,8 @@ class Embedding:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        object_ = d.pop("object")
+
         embedding = cast(List[float], d.pop("embedding"))
 
         index = d.pop("index")
@@ -50,6 +56,7 @@ class Embedding:
         truncated = d.pop("truncated", UNSET)
 
         embedding = cls(
+            object_=object_,
             embedding=embedding,
             index=index,
             truncated=truncated,
