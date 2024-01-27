@@ -27,7 +27,7 @@ class MixedbreadAi:
                 raise Exception("Missing API key. Please set MIXEDBREAD_API_KEY environment variable or pass it to the constructor.")
 
         if base_url is None:
-            raise Exception("Missing basePath")
+            raise Exception("Missing base_url.")
 
         self._client = AuthenticatedClient(
             base_url=base_url,

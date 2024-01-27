@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "mixedbread_ai"
-version = "1.2.1"
+version = "1.2.2"
 description = "mixedbread.ai (https://www.mixedbread.ai)"
 authors = ["mixedbread-ai <support@mixedbread.ai>"]
-license = "MIT"
+license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/mixedbread-ai/python-sdk.git"
 keywords = ["Embeddings", "NLP", "mixedbread.ai"]
