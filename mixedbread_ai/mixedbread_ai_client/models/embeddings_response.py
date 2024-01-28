@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 
 if TYPE_CHECKING:
     from ..models.embedding import Embedding
@@ -10,7 +11,7 @@ if TYPE_CHECKING:
 T = TypeVar("T", bound="EmbeddingsResponse")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class EmbeddingsResponse:
     """
     Attributes:
@@ -26,18 +27,20 @@ class EmbeddingsResponse:
     data: List["Embedding"]
     model: str
     usage: "ModelUsage"
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         object_ = self.object_
+
         normalized = self.normalized
+
         data = []
         for componentsschemas_embeddings_list_item_data in self.data:
             componentsschemas_embeddings_list_item = componentsschemas_embeddings_list_item_data.to_dict()
-
             data.append(componentsschemas_embeddings_list_item)
 
         model = self.model
+
         usage = self.usage.to_dict()
 
         field_dict: Dict[str, Any] = {}

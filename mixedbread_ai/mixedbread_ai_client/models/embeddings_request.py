@@ -1,13 +1,14 @@
 from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="EmbeddingsRequest")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class EmbeddingsRequest:
     """
     Attributes:
@@ -22,12 +23,12 @@ class EmbeddingsRequest:
     input_: Union[List[str], str]
     instruction: Union[Unset, str] = UNSET
     normalized: Union[Unset, bool] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         model = self.model
-        input_: Union[List[str], str]
 
+        input_: Union[List[str], str]
         if isinstance(self.input_, list):
             input_ = self.input_
 
@@ -35,6 +36,7 @@ class EmbeddingsRequest:
             input_ = self.input_
 
         instruction = self.instruction
+
         normalized = self.normalized
 
         field_dict: Dict[str, Any] = {}
