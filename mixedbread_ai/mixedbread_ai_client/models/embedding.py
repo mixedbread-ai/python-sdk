@@ -1,13 +1,14 @@
 from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Embedding")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class Embedding:
     """
     Attributes:
@@ -21,13 +22,15 @@ class Embedding:
     embedding: List[float]
     index: int
     truncated: Union[Unset, bool] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         object_ = self.object_
+
         embedding = self.embedding
 
         index = self.index
+
         truncated = self.truncated
 
         field_dict: Dict[str, Any] = {}
