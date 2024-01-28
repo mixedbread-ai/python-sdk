@@ -1,9 +1,10 @@
 import os
-from typing import Any, Optional, Union, Dict
+from typing import Optional, Union, Dict
 
-from mixedbread_ai.mixedbread_ai_client.client import AuthenticatedClient
-from mixedbread_ai.mixedbread_ai_client.models import EmbeddingsRequest, EmbeddingsResponse
 from mixedbread_ai.mixedbread_ai_client.api.mixedbread_ai import embeddings
+from mixedbread_ai.mixedbread_ai_client.client import AuthenticatedClient
+from mixedbread_ai.mixedbread_ai_client.models import EmbeddingsRequest, EmbeddingsResponse, ErrorResponse
+
 
 class MixedbreadAi:
     _client = None
@@ -24,7 +25,8 @@ class MixedbreadAi:
         if api_key is None:
             api_key = os.environ.get("MIXEDBREAD_API_KEY", os.environ.get("MIXEDBREADAI_API_KEY", None))
             if api_key is None:
-                raise Exception("Missing API key. Please set MIXEDBREAD_API_KEY environment variable or pass it to the constructor.")
+                raise Exception(
+                    "Missing API key. Please set MIXEDBREAD_API_KEY environment variable or pass it to the constructor.")
 
         if base_url is None:
             raise Exception("Missing base_url.")
@@ -41,31 +43,39 @@ class MixedbreadAi:
             raise_on_unexpected_status=raise_for_status,
             verify_ssl=verify_ssl,
         )
+        self._raise_for_status = raise_for_status
+
+    @staticmethod
+    def is_error_response(response):
+        return isinstance(response, ErrorResponse)
+
+    def _handle_response(self, response):
+        if self.is_error_response(response) and self._raise_for_status:
+            raise RuntimeError(f"mixedbread ai client error - {response.code}: {response.message} \n {response.data}")
+        if response is None:
+            raise RuntimeError("mixedbread ai client error - no response")
+        return response
 
     def embeddings(self,
                    model: str,
                    input: Union[str, list[str]],
                    instruction: Optional[str] = None,
-                   normalized: Optional[bool] = None,
-                   **kwargs) -> Optional[Union[Any, EmbeddingsResponse]]:
-        return embeddings.sync(client=self._client, json_body=EmbeddingsRequest(
+                   normalized: Optional[bool] = None) -> Optional[Union[ErrorResponse, EmbeddingsResponse]]:
+        return self._handle_response(embeddings.sync(client=self._client, body=EmbeddingsRequest(
             model=model,
             input_=input,
             instruction=instruction,
             normalized=normalized,
-            **kwargs)
-        )
+        )))
 
     async def async_embeddings(self,
                                model: str,
                                input: Union[str, list[str]],
                                instruction: Optional[str] = None,
-                               normalized: Optional[bool] = None,
-                               **kwargs) -> Optional[Union[Any, EmbeddingsResponse]]:
-        return await embeddings.asyncio(client=self._client, json_body=EmbeddingsRequest(
+                               normalized: Optional[bool] = None) -> Optional[Union[ErrorResponse, EmbeddingsResponse]]:
+        return self._handle_response(await embeddings.asyncio(client=self._client, body=EmbeddingsRequest(
             model=model,
             input_=input,
             instruction=instruction,
             normalized=normalized,
-            **kwargs)
-        )
+        )))
