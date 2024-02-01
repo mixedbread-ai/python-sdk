@@ -12,7 +12,7 @@ Python 3.7+
 If the python package is hosted on a repository, you can install directly using:
 
 ```sh
-pip install mixedbread_ai
+pip install mixedbread-ai
 ```
 
 ### Usage
