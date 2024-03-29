@@ -1,44 +1,20 @@
 [tool.poetry]
 name = "mixedbread-ai"
-version = "1.2.5"
+version = "2.0.0"
 description = "mixedbread ai (https://www.mixedbread.ai)"
 authors = ["mixedbread.ai <support@mixedbread.ai>"]
 license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/mixedbread-ai/python-sdk.git"
 keywords = ["Embeddings", "NLP", "mixedbread.ai"]
-include = ["mixedbread_ai/py.typed"]
 packages = [
     { include = "mixedbread_ai" }
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-httpx = ">=0.15.4,<0.25.0"
-attrs = ">=21.3.0"
-python-dateutil = "^2.8.0"
-
-[tool.poetry.dev-dependencies]
-pytest = ">=7.2.1"
-tox = ">=3.9.0"
-flake8 = ">=4.0.0"
-
-[tool.black]
-line-length = 120
-target_version = ['py37', 'py38', 'py39']
-exclude = '''
-(
-  /(
-    | \.git
-    | \.venv
-    | \.mypy_cache
-  )/
-)
-'''
-
-[tool.isort]
-line_length = 120
-profile = "black"
-
-[tool.pylint.'MESSAGES CONTROL']
-extension-pkg-whitelist = "pydantic"
+python = "^3.8"
+httpx = ">=0.21.2"
+pydantic = ">= 1.9.2"
+requests = "^2.31.0"
+types-requests = "^2.31.0.20240311"
+typing_extensions = ">= 4.0.0"
