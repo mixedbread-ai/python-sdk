@@ -1,54 +1,87 @@
 # mixedbread ai Python SDK
 
-## Introduction to mixedbread ai
-mixedbread ai is a cutting-edge research and development company specializing in Natural Language Processing (NLP). At our core, we focus on advancing the field of NLP through innovative research, offering powerful tools for embeddings, retrieval, and other NLP functionalities. Our mission is to make NLP accessible to everyone on every device. To learn more about mixedbread ai, visit our [website](https://mixedbread.ai/).
+## Table of Contents
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Usage](#usage)
+  - [Embeddings](#embeddings)
+  - [Reranking](#reranking)
+- [Error Handling](#error-handling)
+- [API Documentation](#api-documentation)
 
-## Requirements.
-Python 3.7+
+## Requirements
+- Python 3.8+
 
-## Installation & Usage
-### Installation
-
-If the python package is hosted on a repository, you can install directly using:
-
+## Installation
+You can install directly using:
 ```sh
 pip install mixedbread-ai
 ```
 
-### Usage
-
+## Quick Start
+Here's a minimal example to get started with the mixedbread ai SDK:
 ```python
-from mixedbread_ai import MixedbreadAi
-import os
-os.environ["MIXEDBREAD_API_KEY"] = "{YOUR_API_KEY}"
+from mixedbread_ai import MixedbreadAiApi
 
-mxbai = MixedbreadAi()
+mxbai = MixedbreadAiApi(api_key="{YOUR_API_KEY}")
+
 embeddings = mxbai.embeddings(
-    model="e5-large-v2",
-    input=["I like to eat apples.", "I like to eat bananas."]
+    model="mixedbread-ai/mxbai-embed-large-v1",
+    input=["I like to eat apples."]
 )
 
 print(embeddings)
 ```
 
-Alternatively, you can set the api key via configuration:
+## Usage
+
+### Embeddings
+Here's an example of using the mixedbread ai SDK to create embeddings:
 ```python
-from mixedbread_ai import MixedbreadAi
+from mixedbread_ai import MixedbreadAiApi
 
-mxbai = MixedbreadAi(
-    api_key="{YOUR_API_KEY}",
-    base_url="https://api.mixedbread.ai",
-    timeout=30,
-    headers={"X-Custom-Header": "foobar"},
-    ...
-)
+mxbai = MixedbreadAiApi(api_key="{YOUR_API_KEY}")
 embeddings = mxbai.embeddings(
-    model="e5-large-v2",
-    input=["I like to eat apples.", "I like to eat bananas."],
-    normalized=False
+    model="mixedbread-ai/mxbai-embed-large-v1",
+    input=["I like to eat apples.", "I like to eat bananas."]
+)
+print(embeddings)
+```
+
+### Reranking
+Here's an asynchronous example of using the mixedbread ai SDK to rerank documents:
+```python
+from mixedbread_ai import AsyncMixedbreadAiApi
+
+mxbai = AsyncMixedbreadAiApi(api_key="{YOUR_API_KEY}")
+
+model = "mixedbread-ai/mxbai-rerank-large-v1"
+query = "Who wrote 'To Kill a Mockingbird'?"
+
+documents = [
+    "'To Kill a Mockingbird' is a novel by Harper Lee published in 1960. It was immediately successful, winning the Pulitzer Prize, and has become a classic of modern American literature.",
+    "The novel 'Moby-Dick' was written by Herman Melville and first published in 1851. It is considered a masterpiece of American literature and deals with complex themes of obsession, revenge, and the conflict between good and evil.",
+    "Harper Lee, an American novelist widely known for her novel 'To Kill a Mockingbird', was born in 1926 in Monroeville, Alabama. She received the Pulitzer Prize for Fiction in 1961.",
+    "Jane Austen was an English novelist known primarily for her six major novels, which interpret, critique and comment upon the British landed gentry at the end of the 18th century.",
+    "The 'Harry Potter' series, which consists of seven fantasy novels written by British author J.K. Rowling, is among the most popular and critically acclaimed books of the modern era.",
+    "'The Great Gatsby', a novel written by American author F. Scott Fitzgerald, was published in 1925. The story is set in the Jazz Age and follows the life of millionaire Jay Gatsby and his pursuit of Daisy Buchanan."
+]
+
+reranked_docs = await mxbai_async.reranking(
+    model=model,
+    query=query,
+    input=documents
 )
 
-print(embeddings)
+print(reranked_docs)
 ```
 
 Don't forget to replace `"{YOUR_API_KEY}"` with your actual API key. If you don't have an API key, you can get one for free by signing up for an account at [mixedbread.ai](https://mixedbread.ai/).
+
+
+## Error Handling
+The SDK will raise errors if there is an issue with the API request, such as an invalid API key or a network error. Make sure to handle these exceptions in your code.
+
+## API Documentation
+For more information on the available methods and options in the mixedbread ai SDK, please refer to our [API documentation](https://mixedbread.ai/api-reference).

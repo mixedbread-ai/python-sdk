@@ -3,8 +3,6 @@
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ..core.datetime_utils import serialize_datetime
 
 try:
@@ -14,10 +12,14 @@ except ImportError:
 
 
 class UnauthorizedErrorBody(pydantic.BaseModel):
-    type: typing.Optional[typing_extensions.Literal["unauthorized_error"]]
-    url: typing.Optional[str]
-    message: typing.Optional[str]
-    details: typing.Optional[typing.Dict[str, typing.Any]]
+    type: typing.Optional[str]
+    message: str = pydantic.Field(description="A human-readable message providing more details about the error.")
+    details: typing.Optional[typing.Dict[str, str]] = pydantic.Field(
+        description="Detailed information about the error."
+    )
+    url: typing.Optional[str] = pydantic.Field(
+        description="A URL to more information about the error or to contact support."
+    )
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

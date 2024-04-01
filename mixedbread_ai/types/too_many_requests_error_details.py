@@ -3,8 +3,6 @@
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ..core.datetime_utils import serialize_datetime
 
 try:
@@ -13,11 +11,10 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class NotFoundErrorBody(pydantic.BaseModel):
-    type: typing.Optional[typing_extensions.Literal["not_found_error"]]
-    url: typing.Optional[str]
-    message: typing.Optional[str]
-    details: typing.Optional[typing.Dict[str, typing.Any]]
+class TooManyRequestsErrorDetails(pydantic.BaseModel):
+    limit: typing.Optional[int]
+    remaining: typing.Optional[int]
+    reset: typing.Optional[int]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
