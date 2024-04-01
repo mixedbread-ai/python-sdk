@@ -3,9 +3,8 @@
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ..core.datetime_utils import serialize_datetime
+from .too_many_requests_error_details import TooManyRequestsErrorDetails
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -14,10 +13,12 @@ except ImportError:
 
 
 class TooManyRequestsErrorBody(pydantic.BaseModel):
-    type: typing.Optional[typing_extensions.Literal["too_many_requests_error"]]
-    url: typing.Optional[str]
-    message: typing.Optional[str]
-    details: typing.Optional[typing.Dict[str, typing.Any]]
+    type: typing.Optional[str]
+    details: typing.Optional[TooManyRequestsErrorDetails]
+    message: str = pydantic.Field(description="A human-readable message providing more details about the error.")
+    url: typing.Optional[str] = pydantic.Field(
+        description="A URL to more information about the error or to contact support."
+    )
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
