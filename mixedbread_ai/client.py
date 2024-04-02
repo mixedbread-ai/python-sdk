@@ -9,7 +9,7 @@ import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.jsonable_encoder import jsonable_encoder
-from .environment import MixedbreadAiApiEnvironment
+from .environment import MixedbreadAIEnvironment
 from .errors.bad_request_error import BadRequestError
 from .errors.forbidden_error import ForbiddenError
 from .errors.internal_server_error import InternalServerError
@@ -29,7 +29,7 @@ from .types.text_document import TextDocument
 from .types.too_many_requests_error_body import TooManyRequestsErrorBody
 from .types.truncation_strategy import TruncationStrategy
 from .types.unauthorized_error_body import UnauthorizedErrorBody
-from .types.unprocessable_entity_error_body import UnprocessableEntityErrorBody
+from .types.validation_error import ValidationError
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -40,12 +40,12 @@ except ImportError:
 OMIT = typing.cast(typing.Any, ...)
 
 
-class MixedbreadAiApi:
+class MixedbreadAI:
     def __init__(
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: MixedbreadAiApiEnvironment = MixedbreadAiApiEnvironment.DEFAULT,
+        environment: MixedbreadAIEnvironment = MixedbreadAIEnvironment.DEFAULT,
         api_key: str,
         timeout: typing.Optional[float] = 60,
         httpx_client: typing.Optional[httpx.Client] = None,
@@ -59,58 +59,58 @@ class MixedbreadAiApi:
     def embeddings(
         self,
         *,
-        model: str,
-        input: Input,
-        normalized: typing.Optional[bool] = OMIT,
-        encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat] = OMIT,
-        truncation_strategy: typing.Optional[TruncationStrategy] = OMIT,
         dimensions: typing.Optional[int] = OMIT,
+        encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat] = OMIT,
+        input: Input,
         instruction: typing.Optional[str] = OMIT,
-        texts: typing.Optional[typing.List[str]] = OMIT,
+        model: str,
+        normalized: typing.Optional[bool] = OMIT,
         prompt: typing.Optional[str] = OMIT,
+        texts: typing.Optional[typing.List[str]] = OMIT,
+        truncation_strategy: typing.Optional[TruncationStrategy] = OMIT,
     ) -> EmbeddingsResponse:
         """
         Create embeddings for text or images using the specified model, encoding format, and normalization.
 
         Parameters:
-            - model: str. The model to use for creating embeddings
-
-            - input: Input.
-
-            - normalized: typing.Optional[bool]. Whether to normalize the embeddings
+            - dimensions: typing.Optional[int].
 
             - encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat].
 
-            - truncation_strategy: typing.Optional[TruncationStrategy]. The truncation strategy to use for the input
-
-            - dimensions: typing.Optional[int].
+            - input: Input.
 
             - instruction: typing.Optional[str].
 
-            - texts: typing.Optional[typing.List[str]].
+            - model: str. The model to use for creating embeddings
+
+            - normalized: typing.Optional[bool]. Whether to normalize the embeddings
 
             - prompt: typing.Optional[str].
-        ---
-        from mixedbread-ai.client import MixedbreadAiApi
 
-        client = MixedbreadAiApi(api_key="YOUR_API_KEY", )
+            - texts: typing.Optional[typing.List[str]].
+
+            - truncation_strategy: typing.Optional[TruncationStrategy]. The truncation strategy to use for the input
+        ---
+        from mixedbread-ai.client import MixedbreadAI
+
+        client = MixedbreadAI(api_key="YOUR_API_KEY", )
         client.embeddings(model="model", )
         """
-        _request: typing.Dict[str, typing.Any] = {"model": model, "input": input}
-        if normalized is not OMIT:
-            _request["normalized"] = normalized
-        if encoding_format is not OMIT:
-            _request["encoding_format"] = encoding_format
-        if truncation_strategy is not OMIT:
-            _request["truncation_strategy"] = truncation_strategy.value
+        _request: typing.Dict[str, typing.Any] = {"input": input, "model": model}
         if dimensions is not OMIT:
             _request["dimensions"] = dimensions
+        if encoding_format is not OMIT:
+            _request["encoding_format"] = encoding_format
         if instruction is not OMIT:
             _request["instruction"] = instruction
-        if texts is not OMIT:
-            _request["texts"] = texts
+        if normalized is not OMIT:
+            _request["normalized"] = normalized
         if prompt is not OMIT:
             _request["prompt"] = prompt
+        if texts is not OMIT:
+            _request["texts"] = texts
+        if truncation_strategy is not OMIT:
+            _request["truncation_strategy"] = truncation_strategy.value
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/embeddings"),
@@ -129,9 +129,7 @@ class MixedbreadAiApi:
         if _response.status_code == 404:
             raise NotFoundError(pydantic.parse_obj_as(NotFoundErrorBody, _response.json()))  # type: ignore
         if _response.status_code == 422:
-            raise UnprocessableEntityError(
-                pydantic.parse_obj_as(UnprocessableEntityErrorBody, _response.json())  # type: ignore
-            )
+            raise UnprocessableEntityError(pydantic.parse_obj_as(ValidationError, _response.json()))  # type: ignore
         if _response.status_code == 429:
             raise TooManyRequestsError(
                 pydantic.parse_obj_as(TooManyRequestsErrorBody, _response.json())  # type: ignore
@@ -147,35 +145,35 @@ class MixedbreadAiApi:
     def reranking(
         self,
         *,
-        model: str,
         input: typing.List[TextDocument],
+        model: str,
         query: TextDocument,
-        top_k: typing.Optional[int] = OMIT,
         return_input: typing.Optional[bool] = OMIT,
+        top_k: typing.Optional[int] = OMIT,
     ) -> RerankingResponse:
         """
         Parameters:
-            - model: str. The model to use for creating embeddings
-
             - input: typing.List[TextDocument]. The input documents to rerank
+
+            - model: str. The model to use for creating embeddings
 
             - query: TextDocument. The query to rerank the documents
 
-            - top_k: typing.Optional[int]. The number of documents to return
-
             - return_input: typing.Optional[bool]. Whether to return the documents
+
+            - top_k: typing.Optional[int]. The number of documents to return
         ---
         from mixedbread-ai import TextDocument
-        from mixedbread-ai.client import MixedbreadAiApi
+        from mixedbread-ai.client import MixedbreadAI
 
-        client = MixedbreadAiApi(api_key="YOUR_API_KEY", )
-        client.reranking(model="model", input=[TextDocument(text="text", )], query=TextDocument(text="text", ), top_k=10, return_input=False, )
+        client = MixedbreadAI(api_key="YOUR_API_KEY", )
+        client.reranking(input=[TextDocument(text="text", )], model="model", query=TextDocument(text="text", ), return_input=False, top_k=10, )
         """
-        _request: typing.Dict[str, typing.Any] = {"model": model, "input": input, "query": query}
-        if top_k is not OMIT:
-            _request["top_k"] = top_k
+        _request: typing.Dict[str, typing.Any] = {"input": input, "model": model, "query": query}
         if return_input is not OMIT:
             _request["return_input"] = return_input
+        if top_k is not OMIT:
+            _request["top_k"] = top_k
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/reranking"),
@@ -194,9 +192,7 @@ class MixedbreadAiApi:
         if _response.status_code == 404:
             raise NotFoundError(pydantic.parse_obj_as(NotFoundErrorBody, _response.json()))  # type: ignore
         if _response.status_code == 422:
-            raise UnprocessableEntityError(
-                pydantic.parse_obj_as(UnprocessableEntityErrorBody, _response.json())  # type: ignore
-            )
+            raise UnprocessableEntityError(pydantic.parse_obj_as(ValidationError, _response.json()))  # type: ignore
         if _response.status_code == 429:
             raise TooManyRequestsError(
                 pydantic.parse_obj_as(TooManyRequestsErrorBody, _response.json())  # type: ignore
@@ -210,12 +206,12 @@ class MixedbreadAiApi:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncMixedbreadAiApi:
+class AsyncMixedbreadAI:
     def __init__(
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: MixedbreadAiApiEnvironment = MixedbreadAiApiEnvironment.DEFAULT,
+        environment: MixedbreadAIEnvironment = MixedbreadAIEnvironment.DEFAULT,
         api_key: str,
         timeout: typing.Optional[float] = 60,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -229,58 +225,58 @@ class AsyncMixedbreadAiApi:
     async def embeddings(
         self,
         *,
-        model: str,
-        input: Input,
-        normalized: typing.Optional[bool] = OMIT,
-        encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat] = OMIT,
-        truncation_strategy: typing.Optional[TruncationStrategy] = OMIT,
         dimensions: typing.Optional[int] = OMIT,
+        encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat] = OMIT,
+        input: Input,
         instruction: typing.Optional[str] = OMIT,
-        texts: typing.Optional[typing.List[str]] = OMIT,
+        model: str,
+        normalized: typing.Optional[bool] = OMIT,
         prompt: typing.Optional[str] = OMIT,
+        texts: typing.Optional[typing.List[str]] = OMIT,
+        truncation_strategy: typing.Optional[TruncationStrategy] = OMIT,
     ) -> EmbeddingsResponse:
         """
         Create embeddings for text or images using the specified model, encoding format, and normalization.
 
         Parameters:
-            - model: str. The model to use for creating embeddings
-
-            - input: Input.
-
-            - normalized: typing.Optional[bool]. Whether to normalize the embeddings
+            - dimensions: typing.Optional[int].
 
             - encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat].
 
-            - truncation_strategy: typing.Optional[TruncationStrategy]. The truncation strategy to use for the input
-
-            - dimensions: typing.Optional[int].
+            - input: Input.
 
             - instruction: typing.Optional[str].
 
-            - texts: typing.Optional[typing.List[str]].
+            - model: str. The model to use for creating embeddings
+
+            - normalized: typing.Optional[bool]. Whether to normalize the embeddings
 
             - prompt: typing.Optional[str].
-        ---
-        from mixedbread-ai.client import AsyncMixedbreadAiApi
 
-        client = AsyncMixedbreadAiApi(api_key="YOUR_API_KEY", )
+            - texts: typing.Optional[typing.List[str]].
+
+            - truncation_strategy: typing.Optional[TruncationStrategy]. The truncation strategy to use for the input
+        ---
+        from mixedbread-ai.client import AsyncMixedbreadAI
+
+        client = AsyncMixedbreadAI(api_key="YOUR_API_KEY", )
         await client.embeddings(model="model", )
         """
-        _request: typing.Dict[str, typing.Any] = {"model": model, "input": input}
-        if normalized is not OMIT:
-            _request["normalized"] = normalized
-        if encoding_format is not OMIT:
-            _request["encoding_format"] = encoding_format
-        if truncation_strategy is not OMIT:
-            _request["truncation_strategy"] = truncation_strategy.value
+        _request: typing.Dict[str, typing.Any] = {"input": input, "model": model}
         if dimensions is not OMIT:
             _request["dimensions"] = dimensions
+        if encoding_format is not OMIT:
+            _request["encoding_format"] = encoding_format
         if instruction is not OMIT:
             _request["instruction"] = instruction
-        if texts is not OMIT:
-            _request["texts"] = texts
+        if normalized is not OMIT:
+            _request["normalized"] = normalized
         if prompt is not OMIT:
             _request["prompt"] = prompt
+        if texts is not OMIT:
+            _request["texts"] = texts
+        if truncation_strategy is not OMIT:
+            _request["truncation_strategy"] = truncation_strategy.value
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/embeddings"),
@@ -299,9 +295,7 @@ class AsyncMixedbreadAiApi:
         if _response.status_code == 404:
             raise NotFoundError(pydantic.parse_obj_as(NotFoundErrorBody, _response.json()))  # type: ignore
         if _response.status_code == 422:
-            raise UnprocessableEntityError(
-                pydantic.parse_obj_as(UnprocessableEntityErrorBody, _response.json())  # type: ignore
-            )
+            raise UnprocessableEntityError(pydantic.parse_obj_as(ValidationError, _response.json()))  # type: ignore
         if _response.status_code == 429:
             raise TooManyRequestsError(
                 pydantic.parse_obj_as(TooManyRequestsErrorBody, _response.json())  # type: ignore
@@ -317,35 +311,35 @@ class AsyncMixedbreadAiApi:
     async def reranking(
         self,
         *,
-        model: str,
         input: typing.List[TextDocument],
+        model: str,
         query: TextDocument,
-        top_k: typing.Optional[int] = OMIT,
         return_input: typing.Optional[bool] = OMIT,
+        top_k: typing.Optional[int] = OMIT,
     ) -> RerankingResponse:
         """
         Parameters:
-            - model: str. The model to use for creating embeddings
-
             - input: typing.List[TextDocument]. The input documents to rerank
+
+            - model: str. The model to use for creating embeddings
 
             - query: TextDocument. The query to rerank the documents
 
-            - top_k: typing.Optional[int]. The number of documents to return
-
             - return_input: typing.Optional[bool]. Whether to return the documents
+
+            - top_k: typing.Optional[int]. The number of documents to return
         ---
         from mixedbread-ai import TextDocument
-        from mixedbread-ai.client import AsyncMixedbreadAiApi
+        from mixedbread-ai.client import AsyncMixedbreadAI
 
-        client = AsyncMixedbreadAiApi(api_key="YOUR_API_KEY", )
-        await client.reranking(model="model", input=[TextDocument(text="text", )], query=TextDocument(text="text", ), top_k=10, return_input=False, )
+        client = AsyncMixedbreadAI(api_key="YOUR_API_KEY", )
+        await client.reranking(input=[TextDocument(text="text", )], model="model", query=TextDocument(text="text", ), return_input=False, top_k=10, )
         """
-        _request: typing.Dict[str, typing.Any] = {"model": model, "input": input, "query": query}
-        if top_k is not OMIT:
-            _request["top_k"] = top_k
+        _request: typing.Dict[str, typing.Any] = {"input": input, "model": model, "query": query}
         if return_input is not OMIT:
             _request["return_input"] = return_input
+        if top_k is not OMIT:
+            _request["top_k"] = top_k
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/reranking"),
@@ -364,9 +358,7 @@ class AsyncMixedbreadAiApi:
         if _response.status_code == 404:
             raise NotFoundError(pydantic.parse_obj_as(NotFoundErrorBody, _response.json()))  # type: ignore
         if _response.status_code == 422:
-            raise UnprocessableEntityError(
-                pydantic.parse_obj_as(UnprocessableEntityErrorBody, _response.json())  # type: ignore
-            )
+            raise UnprocessableEntityError(pydantic.parse_obj_as(ValidationError, _response.json()))  # type: ignore
         if _response.status_code == 429:
             raise TooManyRequestsError(
                 pydantic.parse_obj_as(TooManyRequestsErrorBody, _response.json())  # type: ignore
@@ -380,7 +372,7 @@ class AsyncMixedbreadAiApi:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-def _get_base_url(*, base_url: typing.Optional[str] = None, environment: MixedbreadAiApiEnvironment) -> str:
+def _get_base_url(*, base_url: typing.Optional[str] = None, environment: MixedbreadAIEnvironment) -> str:
     if base_url is not None:
         return base_url
     elif environment is not None:

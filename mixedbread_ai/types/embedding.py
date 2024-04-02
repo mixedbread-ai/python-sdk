@@ -4,6 +4,7 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
+from .embedding_item import EmbeddingItem
 from .object_type import ObjectType
 
 try:
@@ -13,7 +14,7 @@ except ImportError:
 
 
 class Embedding(pydantic.BaseModel):
-    embedding: typing.List[float] = pydantic.Field(description="The encoded embedding data by encoding format.")
+    embedding: EmbeddingItem
     index: int = pydantic.Field(description="The index of the embedding")
     object: typing.Optional[ObjectType] = pydantic.Field(description="The object type of the embedding")
 

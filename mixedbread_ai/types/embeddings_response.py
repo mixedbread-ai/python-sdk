@@ -16,13 +16,13 @@ except ImportError:
 
 
 class EmbeddingsResponse(pydantic.BaseModel):
-    usage: Usage = pydantic.Field(description="The usage of the model")
-    model: str = pydantic.Field(description="The model used")
     data: Data = pydantic.Field(description="The created embeddings")
-    object: typing.Optional[ObjectType] = pydantic.Field(description="The object type of the response")
-    normalized: bool = pydantic.Field(description="Whether the embeddings are normalized")
-    encoding_format: EmbeddingsResponseEncodingFormat
     dimensions: typing.Optional[int]
+    encoding_format: EmbeddingsResponseEncodingFormat
+    model: str = pydantic.Field(description="The model used")
+    normalized: bool = pydantic.Field(description="Whether the embeddings are normalized")
+    object: typing.Optional[ObjectType] = pydantic.Field(description="The object type of the response")
+    usage: Usage = pydantic.Field(description="The usage of the model")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

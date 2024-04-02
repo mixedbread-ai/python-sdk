@@ -4,7 +4,7 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .multi_encodings_embedding_embedding_value import MultiEncodingsEmbeddingEmbeddingValue
+from .multiple_encodings_embedding_item import MultipleEncodingsEmbeddingItem
 from .object_type import ObjectType
 
 try:
@@ -13,8 +13,8 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class MultiEncodingsEmbedding(pydantic.BaseModel):
-    embedding: typing.Dict[str, MultiEncodingsEmbeddingEmbeddingValue] = pydantic.Field(
+class MultipleEncodingsEmbedding(pydantic.BaseModel):
+    embedding: MultipleEncodingsEmbeddingItem = pydantic.Field(
         description="The encoded embedding data by encoding format. Returned, if more than one encoding format is used."
     )
     index: int = pydantic.Field(description="The index of the embedding")

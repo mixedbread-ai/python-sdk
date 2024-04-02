@@ -3,10 +3,7 @@
 import datetime as dt
 import typing
 
-import typing_extensions
-
 from ..core.datetime_utils import serialize_datetime
-from .mxbai_web_error_details import MxbaiWebErrorDetails
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -14,11 +11,13 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class TooManyRequestsErrorBody(pydantic.BaseModel):
-    type: typing.Optional[typing_extensions.Literal["too_many_requests_error"]]
-    details: typing.Optional[MxbaiWebErrorDetails]
-    message: typing.Optional[str]
-    url: typing.Optional[str]
+class MultipleEncodingsEmbeddingItem(pydantic.BaseModel):
+    base_64: typing.List[str] = pydantic.Field(alias="base64")
+    binary: typing.List[int]
+    float_: typing.List[float] = pydantic.Field(alias="float")
+    int_8: typing.List[int] = pydantic.Field(alias="int8")
+    ubinary: typing.List[int]
+    uint_8: typing.List[int] = pydantic.Field(alias="uint8")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -31,4 +30,5 @@ class TooManyRequestsErrorBody(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
+        allow_population_by_field_name = True
         json_encoders = {dt.datetime: serialize_datetime}

@@ -3,6 +3,6 @@
 import typing
 
 from .embedding import Embedding
-from .multi_encodings_embedding import MultiEncodingsEmbedding
+from .multiple_encodings_embedding import MultipleEncodingsEmbedding
 
-Data = typing.Union[typing.List[Embedding], typing.List[MultiEncodingsEmbedding]]
+Data = typing.Union[typing.List[Embedding], typing.List[MultipleEncodingsEmbedding]]

@@ -3,5 +3,5 @@
 import enum
 
 
-class MixedbreadAiApiEnvironment(enum.Enum):
+class MixedbreadAIEnvironment(enum.Enum):
     DEFAULT = "https://api.mixedbread.ai"

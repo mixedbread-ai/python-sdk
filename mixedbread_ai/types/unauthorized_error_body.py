@@ -6,6 +6,7 @@ import typing
 import typing_extensions
 
 from ..core.datetime_utils import serialize_datetime
+from .mxbai_web_error_details import MxbaiWebErrorDetails
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -15,9 +16,9 @@ except ImportError:
 
 class UnauthorizedErrorBody(pydantic.BaseModel):
     type: typing.Optional[typing_extensions.Literal["unauthorized_error"]]
-    url: typing.Optional[str]
+    details: typing.Optional[MxbaiWebErrorDetails]
     message: typing.Optional[str]
-    details: typing.Optional[typing.Dict[str, typing.Any]]
+    url: typing.Optional[str]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

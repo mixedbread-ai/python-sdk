@@ -15,12 +15,12 @@ except ImportError:
 
 
 class RerankingResponse(pydantic.BaseModel):
-    usage: Usage = pydantic.Field(description="The usage of the model")
-    model: str = pydantic.Field(description="The model used")
     data: typing.List[RankedDocument] = pydantic.Field(description="The ranked documents")
+    model: str = pydantic.Field(description="The model used")
     object: typing.Optional[ObjectType] = pydantic.Field(description="The object type of the response")
-    top_k: int = pydantic.Field(description="The number of documents to return")
     return_input: bool = pydantic.Field(description="Whether to return the documents")
+    top_k: int = pydantic.Field(description="The number of documents to return")
+    usage: Usage = pydantic.Field(description="The usage of the model")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

@@ -3,6 +3,7 @@
 from .bad_request_error_body import BadRequestErrorBody
 from .data import Data
 from .embedding import Embedding
+from .embedding_item import EmbeddingItem
 from .embeddings_request_encoding_format import EmbeddingsRequestEncodingFormat
 from .embeddings_response import EmbeddingsResponse
 from .embeddings_response_encoding_format import EmbeddingsResponseEncodingFormat
@@ -13,9 +14,10 @@ from .internal_error import InternalError
 from .invalid_matryoshka_dimensions_error import InvalidMatryoshkaDimensionsError
 from .invalid_matryoshka_model_error import InvalidMatryoshkaModelError
 from .model_not_found_error import ModelNotFoundError
-from .multi_encodings_embedding import MultiEncodingsEmbedding
-from .multi_encodings_embedding_embedding_value import MultiEncodingsEmbeddingEmbeddingValue
+from .multiple_encodings_embedding import MultipleEncodingsEmbedding
+from .multiple_encodings_embedding_item import MultipleEncodingsEmbeddingItem
 from .mxbai_web_error import MxbaiWebError
+from .mxbai_web_error_details import MxbaiWebErrorDetails
 from .not_found_error_body import NotFoundErrorBody
 from .object_type import ObjectType
 from .ranked_document import RankedDocument
@@ -24,7 +26,6 @@ from .text_document import TextDocument
 from .too_many_requests_error_body import TooManyRequestsErrorBody
 from .truncation_strategy import TruncationStrategy
 from .unauthorized_error_body import UnauthorizedErrorBody
-from .unprocessable_entity_error_body import UnprocessableEntityErrorBody
 from .usage import Usage
 from .validation_error import ValidationError
 from .web_truncation_error import WebTruncationError
@@ -33,6 +34,7 @@ __all__ = [
     "BadRequestErrorBody",
     "Data",
     "Embedding",
+    "EmbeddingItem",
     "EmbeddingsRequestEncodingFormat",
     "EmbeddingsResponse",
     "EmbeddingsResponseEncodingFormat",
@@ -43,9 +45,10 @@ __all__ = [
     "InvalidMatryoshkaDimensionsError",
     "InvalidMatryoshkaModelError",
     "ModelNotFoundError",
-    "MultiEncodingsEmbedding",
-    "MultiEncodingsEmbeddingEmbeddingValue",
+    "MultipleEncodingsEmbedding",
+    "MultipleEncodingsEmbeddingItem",
     "MxbaiWebError",
+    "MxbaiWebErrorDetails",
     "NotFoundErrorBody",
     "ObjectType",
     "RankedDocument",
@@ -54,7 +57,6 @@ __all__ = [
     "TooManyRequestsErrorBody",
     "TruncationStrategy",
     "UnauthorizedErrorBody",
-    "UnprocessableEntityErrorBody",
     "Usage",
     "ValidationError",
     "WebTruncationError",
