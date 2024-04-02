@@ -68,7 +68,7 @@ embeddings = mxbai.embeddings(
 print(embeddings)
 ```
 
-### Reranking
+### Reranking (Asynchronous)
 Here's an asynchronous example of using the mixedbread ai SDK to rerank documents:
 ```python
 from mixedbread_ai.client import AsyncMixedbreadAI
