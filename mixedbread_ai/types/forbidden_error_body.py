@@ -14,8 +14,8 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class TooManyRequestsErrorBody(pydantic.BaseModel):
-    type: typing.Optional[typing_extensions.Literal["too_many_requests_error"]]
+class ForbiddenErrorBody(pydantic.BaseModel):
+    type: typing.Optional[typing_extensions.Literal["forbidden_error"]]
     url: typing.Optional[str]
     message: typing.Optional[str]
     details: typing.Optional[MxbaiWebErrorDetails]

@@ -3,7 +3,10 @@
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ..core.datetime_utils import serialize_datetime
+from .mxbai_web_error_details import MxbaiWebErrorDetails
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -12,14 +15,10 @@ except ImportError:
 
 
 class InternalError(pydantic.BaseModel):
-    type: typing.Optional[str]
-    message: str = pydantic.Field(description="A human-readable message providing more details about the error.")
-    details: typing.Optional[typing.Dict[str, str]] = pydantic.Field(
-        description="Detailed information about the error."
-    )
-    url: typing.Optional[str] = pydantic.Field(
-        description="A URL to more information about the error or to contact support."
-    )
+    type: typing.Optional[typing_extensions.Literal["server_error"]]
+    url: typing.Optional[str]
+    message: typing.Optional[str]
+    details: typing.Optional[MxbaiWebErrorDetails]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
