@@ -8,7 +8,6 @@ T_Result = typing.TypeVar("T_Result")
 
 class EncodingFormat(str, enum.Enum):
     FLOAT = "float"
-    FLOAT_16 = "float16"
     BASE_64 = "base64"
     BINARY = "binary"
     UBINARY = "ubinary"
@@ -18,7 +17,6 @@ class EncodingFormat(str, enum.Enum):
     def visit(
         self,
         float_: typing.Callable[[], T_Result],
-        float_16: typing.Callable[[], T_Result],
         base_64: typing.Callable[[], T_Result],
         binary: typing.Callable[[], T_Result],
         ubinary: typing.Callable[[], T_Result],
@@ -27,8 +25,6 @@ class EncodingFormat(str, enum.Enum):
     ) -> T_Result:
         if self is EncodingFormat.FLOAT:
             return float_()
-        if self is EncodingFormat.FLOAT_16:
-            return float_16()
         if self is EncodingFormat.BASE_64:
             return base_64()
         if self is EncodingFormat.BINARY:

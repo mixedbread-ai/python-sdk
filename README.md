@@ -22,9 +22,9 @@ pip install mixedbread-ai
 ## Quick Start
 Here's a minimal example to get started with the mixedbread ai SDK:
 ```python
-from mixedbread_ai import MixedbreadAiApi
+from mixedbread_ai import MixedbreadAI
 
-mxbai = MixedbreadAiApi(api_key="{YOUR_API_KEY}")
+mxbai = MixedbreadAI(api_key="{YOUR_API_KEY}")
 
 embeddings = mxbai.embeddings(
     model="mixedbread-ai/mxbai-embed-large-v1",
@@ -37,24 +37,45 @@ print(embeddings)
 ## Usage
 
 ### Embeddings
-Here's an example of using the mixedbread ai SDK to create embeddings:
-```python
-from mixedbread_ai import MixedbreadAiApi
 
-mxbai = MixedbreadAiApi(api_key="{YOUR_API_KEY}")
+Here's an example of using the mixedbread ai SDK to create basic embeddings:
+```python
+from mixedbread_ai import MixedbreadAI
+
+mxbai = MixedbreadAI(api_key="{YOUR_API_KEY}")
 embeddings = mxbai.embeddings(
     model="mixedbread-ai/mxbai-embed-large-v1",
     input=["I like to eat apples.", "I like to eat bananas."]
 )
+
 print(embeddings)
 ```
+
+By providing a prompt, you can guide the model to produce embeddings that are optimized for your specific use-case or downstream task.
+
+```python
+from mixedbread_ai import MixedbreadAI
+
+mxbai = MixedbreadAI(api_key="{YOUR_API_KEY}")
+
+embeddings = mxbai.embeddings(
+    model="mixedbread-ai/mxbai-embed-large-v1",
+    input=["I like to eat apples.", "I like to eat bananas."],
+    prompt="Represent this sentence for searching relevant passages"
+)
+
+print(embeddings)
+```
+
+
+
 
 ### Reranking
 Here's an asynchronous example of using the mixedbread ai SDK to rerank documents:
 ```python
-from mixedbread_ai import AsyncMixedbreadAiApi
+from mixedbread_ai import AsyncMixedbreadAI
 
-mxbai = AsyncMixedbreadAiApi(api_key="{YOUR_API_KEY}")
+mxbai_async = AsyncMixedbreadAI(api_key="{YOUR_API_KEY}")
 
 model = "mixedbread-ai/mxbai-rerank-large-v1"
 query = "Who wrote 'To Kill a Mockingbird'?"
