@@ -22,7 +22,7 @@ pip install mixedbread-ai
 ## Quick Start
 Here's a minimal example to get started with the mixedbread ai SDK:
 ```python
-from mixedbread_ai import MixedbreadAI
+from mixedbread_ai.client import MixedbreadAI
 
 mxbai = MixedbreadAI(api_key="{YOUR_API_KEY}")
 
@@ -40,7 +40,7 @@ print(embeddings)
 
 Here's an example of using the mixedbread ai SDK to create basic embeddings:
 ```python
-from mixedbread_ai import MixedbreadAI
+from mixedbread_ai.client import MixedbreadAI
 
 mxbai = MixedbreadAI(api_key="{YOUR_API_KEY}")
 embeddings = mxbai.embeddings(
@@ -54,7 +54,7 @@ print(embeddings)
 By providing a prompt, you can guide the model to produce embeddings that are optimized for your specific use-case or downstream task.
 
 ```python
-from mixedbread_ai import MixedbreadAI
+from mixedbread_ai.client import MixedbreadAI
 
 mxbai = MixedbreadAI(api_key="{YOUR_API_KEY}")
 
@@ -67,13 +67,10 @@ embeddings = mxbai.embeddings(
 print(embeddings)
 ```
 
-
-
-
 ### Reranking
 Here's an asynchronous example of using the mixedbread ai SDK to rerank documents:
 ```python
-from mixedbread_ai import AsyncMixedbreadAI
+from mixedbread_ai.client import AsyncMixedbreadAI
 
 mxbai_async = AsyncMixedbreadAI(api_key="{YOUR_API_KEY}")
 
