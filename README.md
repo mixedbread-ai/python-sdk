@@ -43,6 +43,7 @@ Here's an example of using the mixedbread ai SDK to create basic embeddings:
 from mixedbread_ai.client import MixedbreadAI
 
 mxbai = MixedbreadAI(api_key="{YOUR_API_KEY}")
+
 embeddings = mxbai.embeddings(
     model="mixedbread-ai/mxbai-embed-large-v1",
     input=["I like to eat apples.", "I like to eat bananas."]
