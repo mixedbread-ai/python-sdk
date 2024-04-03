@@ -4,7 +4,7 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .mxbai_web_error_details import MxbaiWebErrorDetails
+from .mxbai_api_error_details import MxbaiApiErrorDetails
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -14,7 +14,7 @@ except ImportError:
 
 class WebTruncationError(pydantic.BaseModel):
     type: typing.Optional[typing.Literal["truncation_error"]] = None
-    details: typing.Optional[MxbaiWebErrorDetails] = None
+    details: typing.Optional[MxbaiApiErrorDetails] = None
     message: typing.Optional[str] = None
     url: typing.Optional[str] = None
 

@@ -16,8 +16,8 @@ from .invalid_matryoshka_model_error import InvalidMatryoshkaModelError
 from .model_not_found_error import ModelNotFoundError
 from .multiple_encodings_embedding import MultipleEncodingsEmbedding
 from .multiple_encodings_embedding_item import MultipleEncodingsEmbeddingItem
-from .mxbai_web_error import MxbaiWebError
-from .mxbai_web_error_details import MxbaiWebErrorDetails
+from .mxbai_api_error import MxbaiApiError
+from .mxbai_api_error_details import MxbaiApiErrorDetails
 from .not_found_error_body import NotFoundErrorBody
 from .object_type import ObjectType
 from .ranked_document import RankedDocument
@@ -47,8 +47,8 @@ __all__ = [
     "ModelNotFoundError",
     "MultipleEncodingsEmbedding",
     "MultipleEncodingsEmbeddingItem",
-    "MxbaiWebError",
-    "MxbaiWebErrorDetails",
+    "MxbaiApiError",
+    "MxbaiApiErrorDetails",
     "NotFoundErrorBody",
     "ObjectType",
     "RankedDocument",
