@@ -14,9 +14,9 @@ except ImportError:
 
 class ModelNotFoundError(pydantic.BaseModel):
     type: typing.Optional[typing.Literal["model_not_found_error"]] = None
-    details: typing.Optional[MxbaiApiErrorDetails] = None
-    message: typing.Optional[str] = None
     url: typing.Optional[str] = None
+    message: typing.Optional[str] = None
+    details: typing.Optional[MxbaiApiErrorDetails] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

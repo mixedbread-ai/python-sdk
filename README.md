@@ -68,6 +68,23 @@ embeddings = mxbai.embeddings(
 print(embeddings)
 ```
 
+By specifying the encoding format, you can leverage f.e. binary embeddings.
+
+```python
+from mixedbread_ai.client import MixedbreadAI
+from mixedbread_ai.types import EncodingFormat
+
+mxbai = MixedbreadAI(api_key="{YOUR_API_KEY}")
+
+embeddings = mxbai.embeddings(
+    model="mixedbread-ai/mxbai-embed-large-v1",
+    input=["I like to eat apples.", "I like to eat bananas."],
+    encoding_format=[EncodingFormat.FLOAT, EncodingFormat.UBINARY]
+)
+
+print(embeddings.data[0].embedding.float_, embeddings.data[0].embedding.ubinary)
+```
+
 ### Reranking (Asynchronous)
 Here's an asynchronous example of using the mixedbread ai SDK to rerank documents:
 ```python

@@ -12,7 +12,6 @@ except ImportError:
 
 
 class Usage(pydantic.BaseModel):
-    completion_tokens: typing.Optional[int] = None
     prompt_tokens: int = pydantic.Field()
     """
     The number of tokens used for the prompt
@@ -22,6 +21,8 @@ class Usage(pydantic.BaseModel):
     """
     The total number of tokens used
     """
+
+    completion_tokens: typing.Optional[int] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

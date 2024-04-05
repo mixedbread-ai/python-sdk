@@ -18,15 +18,15 @@ class RankedDocument(pydantic.BaseModel):
     The index of the document
     """
 
+    score: float = pydantic.Field()
+    """
+    The score of the document
+    """
+
     input: typing.Any
     object: typing.Optional[ObjectType] = pydantic.Field(default=None)
     """
     The object type
-    """
-
-    score: float = pydantic.Field()
-    """
-    The score of the document
     """
 
     def json(self, **kwargs: typing.Any) -> str:

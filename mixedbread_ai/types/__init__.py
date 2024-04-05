@@ -14,12 +14,14 @@ from .internal_error import InternalError
 from .invalid_matryoshka_dimensions_error import InvalidMatryoshkaDimensionsError
 from .invalid_matryoshka_model_error import InvalidMatryoshkaModelError
 from .model_not_found_error import ModelNotFoundError
+from .multi_modal_input import MultiModalInput
 from .multiple_encodings_embedding import MultipleEncodingsEmbedding
 from .multiple_encodings_embedding_item import MultipleEncodingsEmbeddingItem
 from .mxbai_api_error import MxbaiApiError
 from .mxbai_api_error_details import MxbaiApiErrorDetails
 from .not_found_error_body import NotFoundErrorBody
 from .object_type import ObjectType
+from .query import Query
 from .ranked_document import RankedDocument
 from .reranking_response import RerankingResponse
 from .text_document import TextDocument
@@ -45,12 +47,14 @@ __all__ = [
     "InvalidMatryoshkaDimensionsError",
     "InvalidMatryoshkaModelError",
     "ModelNotFoundError",
+    "MultiModalInput",
     "MultipleEncodingsEmbedding",
     "MultipleEncodingsEmbeddingItem",
     "MxbaiApiError",
     "MxbaiApiErrorDetails",
     "NotFoundErrorBody",
     "ObjectType",
+    "Query",
     "RankedDocument",
     "RerankingResponse",
     "TextDocument",

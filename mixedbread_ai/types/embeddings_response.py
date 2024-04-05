@@ -16,21 +16,19 @@ except ImportError:
 
 
 class EmbeddingsResponse(pydantic.BaseModel):
-    data: Data = pydantic.Field()
+    usage: Usage = pydantic.Field()
     """
-    The created embeddings
+    The usage of the model
     """
 
-    dimensions: typing.Optional[int] = None
-    encoding_format: EmbeddingsResponseEncodingFormat
     model: str = pydantic.Field()
     """
     The model used
     """
 
-    normalized: bool = pydantic.Field()
+    data: Data = pydantic.Field()
     """
-    Whether the embeddings are normalized
+    The created embeddings
     """
 
     object: typing.Optional[ObjectType] = pydantic.Field(default=None)
@@ -38,10 +36,13 @@ class EmbeddingsResponse(pydantic.BaseModel):
     The object type of the response
     """
 
-    usage: Usage = pydantic.Field()
+    normalized: bool = pydantic.Field()
     """
-    The usage of the model
+    Whether the embeddings are normalized
     """
+
+    encoding_format: EmbeddingsResponseEncodingFormat
+    dimensions: typing.Optional[int] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
