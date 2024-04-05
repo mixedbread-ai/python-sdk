@@ -13,10 +13,10 @@ except ImportError:
 
 
 class MxbaiApiError(pydantic.BaseModel):
-    details: typing.Optional[MxbaiApiErrorDetails] = None
-    message: typing.Optional[str] = None
     type: typing.Optional[str] = None
     url: typing.Optional[str] = None
+    message: typing.Optional[str] = None
+    details: typing.Optional[MxbaiApiErrorDetails] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

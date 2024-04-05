@@ -12,12 +12,12 @@ except ImportError:
 
 
 class MultipleEncodingsEmbeddingItem(pydantic.BaseModel):
-    base_64: typing.List[str] = pydantic.Field(alias="base64")
-    binary: typing.List[int]
-    float_: typing.List[float] = pydantic.Field(alias="float")
-    int_8: typing.List[int] = pydantic.Field(alias="int8")
-    ubinary: typing.List[int]
-    uint_8: typing.List[int] = pydantic.Field(alias="uint8")
+    float_: typing.Optional[typing.List[float]] = pydantic.Field(alias="float", default=None)
+    int_8: typing.Optional[typing.List[int]] = pydantic.Field(alias="int8", default=None)
+    uint_8: typing.Optional[typing.List[int]] = pydantic.Field(alias="uint8", default=None)
+    binary: typing.Optional[typing.List[int]] = None
+    ubinary: typing.Optional[typing.List[int]] = None
+    base_64: typing.Optional[typing.List[str]] = pydantic.Field(alias="base64", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

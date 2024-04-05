@@ -25,9 +25,10 @@ from .types.embeddings_response import EmbeddingsResponse
 from .types.forbidden_error_body import ForbiddenErrorBody
 from .types.input import Input
 from .types.internal_error import InternalError
+from .types.multi_modal_input import MultiModalInput
 from .types.not_found_error_body import NotFoundErrorBody
+from .types.query import Query
 from .types.reranking_response import RerankingResponse
-from .types.text_document import TextDocument
 from .types.too_many_requests_error_body import TooManyRequestsErrorBody
 from .types.truncation_strategy import TruncationStrategy
 from .types.unauthorized_error_body import UnauthorizedErrorBody
@@ -82,61 +83,61 @@ class MixedbreadAI:
     def embeddings(
         self,
         *,
-        dimensions: typing.Optional[int] = OMIT,
-        encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat] = OMIT,
-        input: Input,
-        instruction: typing.Optional[str] = OMIT,
         model: str,
+        input: MultiModalInput,
         normalized: typing.Optional[bool] = OMIT,
-        prompt: typing.Optional[str] = OMIT,
-        texts: typing.Optional[typing.Sequence[str]] = OMIT,
+        encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat] = OMIT,
         truncation_strategy: typing.Optional[TruncationStrategy] = OMIT,
+        dimensions: typing.Optional[int] = OMIT,
+        instruction: typing.Optional[str] = OMIT,
+        texts: typing.Optional[typing.Sequence[str]] = OMIT,
+        prompt: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmbeddingsResponse:
         """
         Create embeddings for text or images using the specified model, encoding format, and normalization.
 
         Parameters:
-            - dimensions: typing.Optional[int].
-
-            - encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat].
-
-            - input: Input.
-
-            - instruction: typing.Optional[str].
-
             - model: str. The model to use for creating embeddings
+
+            - input: MultiModalInput.
 
             - normalized: typing.Optional[bool]. Whether to normalize the embeddings
 
-            - prompt: typing.Optional[str].
+            - encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat].
+
+            - truncation_strategy: typing.Optional[TruncationStrategy]. The truncation strategy to use for the input
+
+            - dimensions: typing.Optional[int].
+
+            - instruction: typing.Optional[str].
 
             - texts: typing.Optional[typing.Sequence[str]].
 
-            - truncation_strategy: typing.Optional[TruncationStrategy]. The truncation strategy to use for the input
+            - prompt: typing.Optional[str].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from mixedbread-ai.client import MixedbreadAI
 
         client = MixedbreadAI(api_key="YOUR_API_KEY", )
-        client.embeddings(input="input", model="model", )
+        client.embeddings(model="model", input="input", )
         """
-        _request: typing.Dict[str, typing.Any] = {"input": input, "model": model}
-        if dimensions is not OMIT:
-            _request["dimensions"] = dimensions
-        if encoding_format is not OMIT:
-            _request["encoding_format"] = encoding_format
-        if instruction is not OMIT:
-            _request["instruction"] = instruction
+        _request: typing.Dict[str, typing.Any] = {"model": model, "input": input}
         if normalized is not OMIT:
             _request["normalized"] = normalized
-        if prompt is not OMIT:
-            _request["prompt"] = prompt
-        if texts is not OMIT:
-            _request["texts"] = texts
+        if encoding_format is not OMIT:
+            _request["encoding_format"] = encoding_format
         if truncation_strategy is not OMIT:
             _request["truncation_strategy"] = truncation_strategy
+        if dimensions is not OMIT:
+            _request["dimensions"] = dimensions
+        if instruction is not OMIT:
+            _request["instruction"] = instruction
+        if texts is not OMIT:
+            _request["texts"] = texts
+        if prompt is not OMIT:
+            _request["prompt"] = prompt
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/embeddings"),
@@ -190,24 +191,24 @@ class MixedbreadAI:
     def reranking(
         self,
         *,
-        input: typing.Sequence[TextDocument],
         model: str,
-        query: TextDocument,
-        return_input: typing.Optional[bool] = OMIT,
+        input: Input,
+        query: Query,
         top_k: typing.Optional[int] = OMIT,
+        return_input: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RerankingResponse:
         """
         Parameters:
-            - input: typing.Sequence[TextDocument]. The input documents to rerank
-
             - model: str. The model to use for creating embeddings
 
-            - query: TextDocument. The query to rerank the documents
+            - input: Input. The input documents to rerank
 
-            - return_input: typing.Optional[bool]. Whether to return the documents
+            - query: Query. The query to rerank the documents
 
             - top_k: typing.Optional[int]. The number of documents to return
+
+            - return_input: typing.Optional[bool]. Whether to return the documents
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -215,13 +216,13 @@ class MixedbreadAI:
         from mixedbread-ai.client import MixedbreadAI
 
         client = MixedbreadAI(api_key="YOUR_API_KEY", )
-        client.reranking(input=[TextDocument(text="text", )], model="model", query=TextDocument(text="text", ), return_input=False, top_k=10, )
+        client.reranking(model="model", input=["input"], query=TextDocument(text="text", ), top_k=10, return_input=False, )
         """
-        _request: typing.Dict[str, typing.Any] = {"input": input, "model": model, "query": query}
-        if return_input is not OMIT:
-            _request["return_input"] = return_input
+        _request: typing.Dict[str, typing.Any] = {"model": model, "input": input, "query": query}
         if top_k is not OMIT:
             _request["top_k"] = top_k
+        if return_input is not OMIT:
+            _request["return_input"] = return_input
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/reranking"),
@@ -313,61 +314,61 @@ class AsyncMixedbreadAI:
     async def embeddings(
         self,
         *,
-        dimensions: typing.Optional[int] = OMIT,
-        encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat] = OMIT,
-        input: Input,
-        instruction: typing.Optional[str] = OMIT,
         model: str,
+        input: MultiModalInput,
         normalized: typing.Optional[bool] = OMIT,
-        prompt: typing.Optional[str] = OMIT,
-        texts: typing.Optional[typing.Sequence[str]] = OMIT,
+        encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat] = OMIT,
         truncation_strategy: typing.Optional[TruncationStrategy] = OMIT,
+        dimensions: typing.Optional[int] = OMIT,
+        instruction: typing.Optional[str] = OMIT,
+        texts: typing.Optional[typing.Sequence[str]] = OMIT,
+        prompt: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmbeddingsResponse:
         """
         Create embeddings for text or images using the specified model, encoding format, and normalization.
 
         Parameters:
-            - dimensions: typing.Optional[int].
-
-            - encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat].
-
-            - input: Input.
-
-            - instruction: typing.Optional[str].
-
             - model: str. The model to use for creating embeddings
+
+            - input: MultiModalInput.
 
             - normalized: typing.Optional[bool]. Whether to normalize the embeddings
 
-            - prompt: typing.Optional[str].
+            - encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat].
+
+            - truncation_strategy: typing.Optional[TruncationStrategy]. The truncation strategy to use for the input
+
+            - dimensions: typing.Optional[int].
+
+            - instruction: typing.Optional[str].
 
             - texts: typing.Optional[typing.Sequence[str]].
 
-            - truncation_strategy: typing.Optional[TruncationStrategy]. The truncation strategy to use for the input
+            - prompt: typing.Optional[str].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from mixedbread-ai.client import AsyncMixedbreadAI
 
         client = AsyncMixedbreadAI(api_key="YOUR_API_KEY", )
-        await client.embeddings(input="input", model="model", )
+        await client.embeddings(model="model", input="input", )
         """
-        _request: typing.Dict[str, typing.Any] = {"input": input, "model": model}
-        if dimensions is not OMIT:
-            _request["dimensions"] = dimensions
-        if encoding_format is not OMIT:
-            _request["encoding_format"] = encoding_format
-        if instruction is not OMIT:
-            _request["instruction"] = instruction
+        _request: typing.Dict[str, typing.Any] = {"model": model, "input": input}
         if normalized is not OMIT:
             _request["normalized"] = normalized
-        if prompt is not OMIT:
-            _request["prompt"] = prompt
-        if texts is not OMIT:
-            _request["texts"] = texts
+        if encoding_format is not OMIT:
+            _request["encoding_format"] = encoding_format
         if truncation_strategy is not OMIT:
             _request["truncation_strategy"] = truncation_strategy
+        if dimensions is not OMIT:
+            _request["dimensions"] = dimensions
+        if instruction is not OMIT:
+            _request["instruction"] = instruction
+        if texts is not OMIT:
+            _request["texts"] = texts
+        if prompt is not OMIT:
+            _request["prompt"] = prompt
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/embeddings"),
@@ -421,24 +422,24 @@ class AsyncMixedbreadAI:
     async def reranking(
         self,
         *,
-        input: typing.Sequence[TextDocument],
         model: str,
-        query: TextDocument,
-        return_input: typing.Optional[bool] = OMIT,
+        input: Input,
+        query: Query,
         top_k: typing.Optional[int] = OMIT,
+        return_input: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RerankingResponse:
         """
         Parameters:
-            - input: typing.Sequence[TextDocument]. The input documents to rerank
-
             - model: str. The model to use for creating embeddings
 
-            - query: TextDocument. The query to rerank the documents
+            - input: Input. The input documents to rerank
 
-            - return_input: typing.Optional[bool]. Whether to return the documents
+            - query: Query. The query to rerank the documents
 
             - top_k: typing.Optional[int]. The number of documents to return
+
+            - return_input: typing.Optional[bool]. Whether to return the documents
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -446,13 +447,13 @@ class AsyncMixedbreadAI:
         from mixedbread-ai.client import AsyncMixedbreadAI
 
         client = AsyncMixedbreadAI(api_key="YOUR_API_KEY", )
-        await client.reranking(input=[TextDocument(text="text", )], model="model", query=TextDocument(text="text", ), return_input=False, top_k=10, )
+        await client.reranking(model="model", input=["input"], query=TextDocument(text="text", ), top_k=10, return_input=False, )
         """
-        _request: typing.Dict[str, typing.Any] = {"input": input, "model": model, "query": query}
-        if return_input is not OMIT:
-            _request["return_input"] = return_input
+        _request: typing.Dict[str, typing.Any] = {"model": model, "input": input, "query": query}
         if top_k is not OMIT:
             _request["top_k"] = top_k
+        if return_input is not OMIT:
+            _request["return_input"] = return_input
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/reranking"),

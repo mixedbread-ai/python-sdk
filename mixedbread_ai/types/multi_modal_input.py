@@ -4,4 +4,4 @@ import typing
 
 from .text_document import TextDocument
 
-Input = typing.Union[typing.List[str], typing.List[TextDocument]]
+MultiModalInput = typing.Union[str, typing.List[str], TextDocument, typing.List[TextDocument]]

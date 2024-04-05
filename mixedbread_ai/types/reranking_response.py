@@ -15,9 +15,9 @@ except ImportError:
 
 
 class RerankingResponse(pydantic.BaseModel):
-    data: typing.List[RankedDocument] = pydantic.Field()
+    usage: Usage = pydantic.Field()
     """
-    The ranked documents
+    The usage of the model
     """
 
     model: str = pydantic.Field()
@@ -25,14 +25,14 @@ class RerankingResponse(pydantic.BaseModel):
     The model used
     """
 
+    data: typing.List[RankedDocument] = pydantic.Field()
+    """
+    The ranked documents
+    """
+
     object: typing.Optional[ObjectType] = pydantic.Field(default=None)
     """
     The object type of the response
-    """
-
-    return_input: bool = pydantic.Field()
-    """
-    Whether to return the documents
     """
 
     top_k: int = pydantic.Field()
@@ -40,9 +40,9 @@ class RerankingResponse(pydantic.BaseModel):
     The number of documents to return
     """
 
-    usage: Usage = pydantic.Field()
+    return_input: bool = pydantic.Field()
     """
-    The usage of the model
+    Whether to return the documents
     """
 
     def json(self, **kwargs: typing.Any) -> str:
