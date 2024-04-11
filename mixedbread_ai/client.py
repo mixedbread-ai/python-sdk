@@ -23,9 +23,9 @@ from .types.bad_request_error_body import BadRequestErrorBody
 from .types.embeddings_request_encoding_format import EmbeddingsRequestEncodingFormat
 from .types.embeddings_response import EmbeddingsResponse
 from .types.forbidden_error_body import ForbiddenErrorBody
-from .types.input import Input
 from .types.internal_error import InternalError
 from .types.multi_modal_input import MultiModalInput
+from .types.multi_modal_reranking_input import MultiModalRerankingInput
 from .types.not_found_error_body import NotFoundErrorBody
 from .types.query import Query
 from .types.reranking_response import RerankingResponse
@@ -192,19 +192,22 @@ class MixedbreadAI:
         self,
         *,
         model: str,
-        input: Input,
         query: Query,
+        input: MultiModalRerankingInput,
+        rank_fields: typing.Optional[typing.Sequence[str]] = OMIT,
         top_k: typing.Optional[int] = OMIT,
         return_input: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RerankingResponse:
         """
         Parameters:
-            - model: str. The model to use for creating embeddings
-
-            - input: Input. The input documents to rerank
+            - model: str. The model to use for reranking documents
 
             - query: Query. The query to rerank the documents
+
+            - input: MultiModalRerankingInput.
+
+            - rank_fields: typing.Optional[typing.Sequence[str]].
 
             - top_k: typing.Optional[int]. The number of documents to return
 
@@ -216,9 +219,11 @@ class MixedbreadAI:
         from mixedbread-ai.client import MixedbreadAI
 
         client = MixedbreadAI(api_key="YOUR_API_KEY", )
-        client.reranking(model="model", input=["input"], query=TextDocument(text="text", ), top_k=10, return_input=False, )
+        client.reranking(model="model", query=TextDocument(text="text", ), input=["input"], top_k=10, return_input=False, )
         """
-        _request: typing.Dict[str, typing.Any] = {"model": model, "input": input, "query": query}
+        _request: typing.Dict[str, typing.Any] = {"model": model, "query": query, "input": input}
+        if rank_fields is not OMIT:
+            _request["rank_fields"] = rank_fields
         if top_k is not OMIT:
             _request["top_k"] = top_k
         if return_input is not OMIT:
@@ -423,19 +428,22 @@ class AsyncMixedbreadAI:
         self,
         *,
         model: str,
-        input: Input,
         query: Query,
+        input: MultiModalRerankingInput,
+        rank_fields: typing.Optional[typing.Sequence[str]] = OMIT,
         top_k: typing.Optional[int] = OMIT,
         return_input: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RerankingResponse:
         """
         Parameters:
-            - model: str. The model to use for creating embeddings
-
-            - input: Input. The input documents to rerank
+            - model: str. The model to use for reranking documents
 
             - query: Query. The query to rerank the documents
+
+            - input: MultiModalRerankingInput.
+
+            - rank_fields: typing.Optional[typing.Sequence[str]].
 
             - top_k: typing.Optional[int]. The number of documents to return
 
@@ -447,9 +455,11 @@ class AsyncMixedbreadAI:
         from mixedbread-ai.client import AsyncMixedbreadAI
 
         client = AsyncMixedbreadAI(api_key="YOUR_API_KEY", )
-        await client.reranking(model="model", input=["input"], query=TextDocument(text="text", ), top_k=10, return_input=False, )
+        await client.reranking(model="model", query=TextDocument(text="text", ), input=["input"], top_k=10, return_input=False, )
         """
-        _request: typing.Dict[str, typing.Any] = {"model": model, "input": input, "query": query}
+        _request: typing.Dict[str, typing.Any] = {"model": model, "query": query, "input": input}
+        if rank_fields is not OMIT:
+            _request["rank_fields"] = rank_fields
         if top_k is not OMIT:
             _request["top_k"] = top_k
         if return_input is not OMIT:
