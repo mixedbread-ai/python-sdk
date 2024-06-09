@@ -89,8 +89,6 @@ class MixedbreadAI:
         encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat] = OMIT,
         truncation_strategy: typing.Optional[TruncationStrategy] = OMIT,
         dimensions: typing.Optional[int] = OMIT,
-        instruction: typing.Optional[str] = OMIT,
-        texts: typing.Optional[typing.Sequence[str]] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmbeddingsResponse:
@@ -110,10 +108,6 @@ class MixedbreadAI:
 
             - dimensions: typing.Optional[int].
 
-            - instruction: typing.Optional[str].
-
-            - texts: typing.Optional[typing.Sequence[str]].
-
             - prompt: typing.Optional[str].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
@@ -132,10 +126,6 @@ class MixedbreadAI:
             _request["truncation_strategy"] = truncation_strategy
         if dimensions is not OMIT:
             _request["dimensions"] = dimensions
-        if instruction is not OMIT:
-            _request["instruction"] = instruction
-        if texts is not OMIT:
-            _request["texts"] = texts
         if prompt is not OMIT:
             _request["prompt"] = prompt
         _response = self._client_wrapper.httpx_client.request(
@@ -325,8 +315,6 @@ class AsyncMixedbreadAI:
         encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat] = OMIT,
         truncation_strategy: typing.Optional[TruncationStrategy] = OMIT,
         dimensions: typing.Optional[int] = OMIT,
-        instruction: typing.Optional[str] = OMIT,
-        texts: typing.Optional[typing.Sequence[str]] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmbeddingsResponse:
@@ -346,10 +334,6 @@ class AsyncMixedbreadAI:
 
             - dimensions: typing.Optional[int].
 
-            - instruction: typing.Optional[str].
-
-            - texts: typing.Optional[typing.Sequence[str]].
-
             - prompt: typing.Optional[str].
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
@@ -368,10 +352,6 @@ class AsyncMixedbreadAI:
             _request["truncation_strategy"] = truncation_strategy
         if dimensions is not OMIT:
             _request["dimensions"] = dimensions
-        if instruction is not OMIT:
-            _request["instruction"] = instruction
-        if texts is not OMIT:
-            _request["texts"] = texts
         if prompt is not OMIT:
             _request["prompt"] = prompt
         _response = await self._client_wrapper.httpx_client.request(

@@ -116,8 +116,30 @@ print(reranked_docs)
 Don't forget to replace `"{YOUR_API_KEY}"` with your actual API key. If you don't have an API key, you can get one for free by signing up for an account at [mixedbread.ai](https://mixedbread.ai/).
 
 
-## Error Handling
+## Error Handling and Retries
 The SDK will raise errors if there is an issue with the API request, such as an invalid API key or a network error. Make sure to handle these exceptions in your code.
+
+```python
+from mixedbread_ai.client import MixedbreadAI, ApiError
+from mixedbread_ai.types import EncodingFormat
+
+mxbai = MixedbreadAI(api_key="{YOUR_API_KEY}")
+
+try:
+    embeddings = mxbai.embeddings(
+        model="mixedbread-ai/mxbai-embed-large-v1",
+        input=["I like to eat apples.", "I like to eat bananas."],
+        encoding_format=[EncodingFormat.FLOAT, EncodingFormat.UBINARY],
+        request_options={
+            "max_retries": 3,
+        }
+    )
+except ApiError as e:
+    print(e.status_code)
+
+print(embeddings.data[0].embedding.float_, embeddings.data[0].embedding.ubinary)
+```
+
 
 ## API Documentation
 For more information on the available methods and options in the mixedbread ai SDK, please refer to our [API documentation](https://mixedbread.ai/api-reference).
