@@ -12,6 +12,7 @@ except ImportError:
 
 
 class TextDocument(pydantic.BaseModel):
+    type: typing.Optional[typing.Literal["text"]] = None
     text: str = pydantic.Field()
     """
     The text to be processed

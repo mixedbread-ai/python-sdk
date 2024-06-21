@@ -5,7 +5,6 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from .multiple_encodings_embedding_item import MultipleEncodingsEmbeddingItem
-from .object_type import ObjectType
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -21,13 +20,10 @@ class MultipleEncodingsEmbedding(pydantic.BaseModel):
 
     index: int = pydantic.Field()
     """
-    The index of the embedding
+    The index of the embedding.
     """
 
-    object: typing.Optional[ObjectType] = pydantic.Field(default=None)
-    """
-    The object type of the embedding
-    """
+    object: typing.Literal["embedding_dict"]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

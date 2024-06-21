@@ -96,15 +96,15 @@ class MixedbreadAI:
         Create embeddings for text or images using the specified model, encoding format, and normalization.
 
         Parameters:
-            - model: str. The model to use for creating embeddings
+            - model: str. The model to use for creating embeddings.
 
-            - input: MultiModalInput.
+            - input: MultiModalInput. The input to create embeddings for.
 
-            - normalized: typing.Optional[bool]. Whether to normalize the embeddings
+            - normalized: typing.Optional[bool]. Whether to normalize the embeddings.
 
             - encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat].
 
-            - truncation_strategy: typing.Optional[TruncationStrategy]. The truncation strategy to use for the input
+            - truncation_strategy: typing.Optional[TruncationStrategy]. The truncation strategy to use for the input.
 
             - dimensions: typing.Optional[int].
 
@@ -115,7 +115,7 @@ class MixedbreadAI:
         from mixedbread-ai.client import MixedbreadAI
 
         client = MixedbreadAI(api_key="YOUR_API_KEY", )
-        client.embeddings(model="model", input="input", )
+        client.embeddings(model="mixedbread-ai/mxbai-embed-large-v1", input="This is a sample text input.", normalized=True, )
         """
         _request: typing.Dict[str, typing.Any] = {"model": model, "input": input}
         if normalized is not OMIT:
@@ -181,7 +181,7 @@ class MixedbreadAI:
     def reranking(
         self,
         *,
-        model: str,
+        model: typing.Optional[str] = OMIT,
         query: Query,
         input: MultiModalRerankingInput,
         rank_fields: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -191,17 +191,17 @@ class MixedbreadAI:
     ) -> RerankingResponse:
         """
         Parameters:
-            - model: str. The model to use for reranking documents
+            - model: typing.Optional[str]. The model to use for reranking documents.
 
-            - query: Query. The query to rerank the documents
+            - query: Query. The query to rerank the documents.
 
             - input: MultiModalRerankingInput.
 
             - rank_fields: typing.Optional[typing.Sequence[str]].
 
-            - top_k: typing.Optional[int]. The number of documents to return
+            - top_k: typing.Optional[int]. The number of documents to return.
 
-            - return_input: typing.Optional[bool]. Whether to return the documents
+            - return_input: typing.Optional[bool]. Whether to return the documents.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -209,9 +209,11 @@ class MixedbreadAI:
         from mixedbread-ai.client import MixedbreadAI
 
         client = MixedbreadAI(api_key="YOUR_API_KEY", )
-        client.reranking(model="model", query=TextDocument(text="text", ), input=["input"], top_k=10, return_input=False, )
+        client.reranking(model="mixedbread-ai/mxbai-rerank-large-v1", query=TextDocument(text="text", ), input=["input"], top_k=10, return_input=False, )
         """
-        _request: typing.Dict[str, typing.Any] = {"model": model, "query": query, "input": input}
+        _request: typing.Dict[str, typing.Any] = {"query": query, "input": input}
+        if model is not OMIT:
+            _request["model"] = model
         if rank_fields is not OMIT:
             _request["rank_fields"] = rank_fields
         if top_k is not OMIT:
@@ -322,15 +324,15 @@ class AsyncMixedbreadAI:
         Create embeddings for text or images using the specified model, encoding format, and normalization.
 
         Parameters:
-            - model: str. The model to use for creating embeddings
+            - model: str. The model to use for creating embeddings.
 
-            - input: MultiModalInput.
+            - input: MultiModalInput. The input to create embeddings for.
 
-            - normalized: typing.Optional[bool]. Whether to normalize the embeddings
+            - normalized: typing.Optional[bool]. Whether to normalize the embeddings.
 
             - encoding_format: typing.Optional[EmbeddingsRequestEncodingFormat].
 
-            - truncation_strategy: typing.Optional[TruncationStrategy]. The truncation strategy to use for the input
+            - truncation_strategy: typing.Optional[TruncationStrategy]. The truncation strategy to use for the input.
 
             - dimensions: typing.Optional[int].
 
@@ -341,7 +343,7 @@ class AsyncMixedbreadAI:
         from mixedbread-ai.client import AsyncMixedbreadAI
 
         client = AsyncMixedbreadAI(api_key="YOUR_API_KEY", )
-        await client.embeddings(model="model", input="input", )
+        await client.embeddings(model="mixedbread-ai/mxbai-embed-large-v1", input="This is a sample text input.", normalized=True, )
         """
         _request: typing.Dict[str, typing.Any] = {"model": model, "input": input}
         if normalized is not OMIT:
@@ -407,7 +409,7 @@ class AsyncMixedbreadAI:
     async def reranking(
         self,
         *,
-        model: str,
+        model: typing.Optional[str] = OMIT,
         query: Query,
         input: MultiModalRerankingInput,
         rank_fields: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -417,17 +419,17 @@ class AsyncMixedbreadAI:
     ) -> RerankingResponse:
         """
         Parameters:
-            - model: str. The model to use for reranking documents
+            - model: typing.Optional[str]. The model to use for reranking documents.
 
-            - query: Query. The query to rerank the documents
+            - query: Query. The query to rerank the documents.
 
             - input: MultiModalRerankingInput.
 
             - rank_fields: typing.Optional[typing.Sequence[str]].
 
-            - top_k: typing.Optional[int]. The number of documents to return
+            - top_k: typing.Optional[int]. The number of documents to return.
 
-            - return_input: typing.Optional[bool]. Whether to return the documents
+            - return_input: typing.Optional[bool]. Whether to return the documents.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -435,9 +437,11 @@ class AsyncMixedbreadAI:
         from mixedbread-ai.client import AsyncMixedbreadAI
 
         client = AsyncMixedbreadAI(api_key="YOUR_API_KEY", )
-        await client.reranking(model="model", query=TextDocument(text="text", ), input=["input"], top_k=10, return_input=False, )
+        await client.reranking(model="mixedbread-ai/mxbai-rerank-large-v1", query=TextDocument(text="text", ), input=["input"], top_k=10, return_input=False, )
         """
-        _request: typing.Dict[str, typing.Any] = {"model": model, "query": query, "input": input}
+        _request: typing.Dict[str, typing.Any] = {"query": query, "input": input}
+        if model is not OMIT:
+            _request["model"] = model
         if rank_fields is not OMIT:
             _request["rank_fields"] = rank_fields
         if top_k is not OMIT:

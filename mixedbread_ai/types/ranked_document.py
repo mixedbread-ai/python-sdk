@@ -15,18 +15,18 @@ except ImportError:
 class RankedDocument(pydantic.BaseModel):
     index: int = pydantic.Field()
     """
-    The index of the document
+    The index of the document.
     """
 
     score: float = pydantic.Field()
     """
-    The score of the document
+    The score of the document.
     """
 
     input: typing.Any
     object: typing.Optional[ObjectType] = pydantic.Field(default=None)
     """
-    The object type
+    The object type.
     """
 
     def json(self, **kwargs: typing.Any) -> str:

@@ -13,7 +13,7 @@ except ImportError:
 
 
 class InternalError(pydantic.BaseModel):
-    type: typing.Optional[str] = None
+    type: typing.Optional[typing.Literal["server_error"]] = None
     url: typing.Optional[str] = None
     message: typing.Optional[str] = None
     details: typing.Optional[MxbaiApiErrorDetails] = None

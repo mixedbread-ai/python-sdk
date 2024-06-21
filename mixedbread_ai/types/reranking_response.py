@@ -27,7 +27,7 @@ class RerankingResponse(pydantic.BaseModel):
 
     data: typing.List[RankedDocument] = pydantic.Field()
     """
-    The ranked documents
+    The ranked documents.
     """
 
     object: typing.Optional[ObjectType] = pydantic.Field(default=None)
@@ -37,12 +37,12 @@ class RerankingResponse(pydantic.BaseModel):
 
     top_k: int = pydantic.Field()
     """
-    The number of documents to return
+    The number of documents to return.
     """
 
     return_input: bool = pydantic.Field()
     """
-    Whether to return the documents
+    Whether to return the documents.
     """
 
     def json(self, **kwargs: typing.Any) -> str:

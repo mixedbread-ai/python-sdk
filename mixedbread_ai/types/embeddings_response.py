@@ -28,7 +28,7 @@ class EmbeddingsResponse(pydantic.BaseModel):
 
     data: Data = pydantic.Field()
     """
-    The created embeddings
+    The created embeddings.
     """
 
     object: typing.Optional[ObjectType] = pydantic.Field(default=None)
@@ -38,7 +38,7 @@ class EmbeddingsResponse(pydantic.BaseModel):
 
     normalized: bool = pydantic.Field()
     """
-    Whether the embeddings are normalized
+    Whether the embeddings are normalized.
     """
 
     encoding_format: EmbeddingsResponseEncodingFormat
