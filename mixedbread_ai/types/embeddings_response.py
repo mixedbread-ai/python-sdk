@@ -24,7 +24,7 @@ class EmbeddingsResponse(pydantic_v1.BaseModel):
 
     data: Data = pydantic_v1.Field()
     """
-    The created embeddings
+    The created embeddings.
     """
 
     object: typing.Optional[ObjectType] = pydantic_v1.Field(default=None)
@@ -34,13 +34,13 @@ class EmbeddingsResponse(pydantic_v1.BaseModel):
 
     normalized: bool = pydantic_v1.Field()
     """
-    Whether the embeddings are normalized
+    Whether the embeddings are normalized.
     """
 
     encoding_format: EmbeddingsResponseEncodingFormat
     dimensions: typing.Optional[int] = pydantic_v1.Field(default=None)
     """
-    The number of dimensions used for the embeddings. Only available for Matryoshka models.
+    The number of dimensions used for the embeddings.
     """
 
     def json(self, **kwargs: typing.Any) -> str:

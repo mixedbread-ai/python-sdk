@@ -8,6 +8,11 @@ from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
 class TextDocument(pydantic_v1.BaseModel):
+    type: typing.Optional[typing.Literal["text"]] = pydantic_v1.Field(default=None)
+    """
+    The type of the document
+    """
+
     text: str = pydantic_v1.Field()
     """
     The text to be processed

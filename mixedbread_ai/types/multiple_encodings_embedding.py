@@ -6,7 +6,6 @@ import typing
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .multiple_encodings_embedding_item import MultipleEncodingsEmbeddingItem
-from .object_type import ObjectType
 
 
 class MultipleEncodingsEmbedding(pydantic_v1.BaseModel):
@@ -17,12 +16,12 @@ class MultipleEncodingsEmbedding(pydantic_v1.BaseModel):
 
     index: int = pydantic_v1.Field()
     """
-    The index of the embedding
+    The index of the embedding.
     """
 
-    object: typing.Optional[ObjectType] = pydantic_v1.Field(default=None)
+    object: typing.Literal["embedding_dict"] = pydantic_v1.Field(default="embedding_dict")
     """
-    The object type of the embedding
+    The object type of the embedding.
     """
 
     def json(self, **kwargs: typing.Any) -> str:
