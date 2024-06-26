@@ -9,12 +9,12 @@ from .embeddings_response import EmbeddingsResponse
 from .embeddings_response_encoding_format import EmbeddingsResponseEncodingFormat
 from .encoding_format import EncodingFormat
 from .forbidden_error_body import ForbiddenErrorBody
+from .input import Input
 from .internal_error import InternalError
 from .invalid_matryoshka_dimensions_error import InvalidMatryoshkaDimensionsError
 from .invalid_matryoshka_model_error import InvalidMatryoshkaModelError
 from .model_not_found_error import ModelNotFoundError
 from .multi_modal_input import MultiModalInput
-from .multi_modal_reranking_input import MultiModalRerankingInput
 from .multiple_encodings_embedding import MultipleEncodingsEmbedding
 from .multiple_encodings_embedding_item import MultipleEncodingsEmbeddingItem
 from .mxbai_api_error import MxbaiApiError
@@ -42,12 +42,12 @@ __all__ = [
     "EmbeddingsResponseEncodingFormat",
     "EncodingFormat",
     "ForbiddenErrorBody",
+    "Input",
     "InternalError",
     "InvalidMatryoshkaDimensionsError",
     "InvalidMatryoshkaModelError",
     "ModelNotFoundError",
     "MultiModalInput",
-    "MultiModalRerankingInput",
     "MultipleEncodingsEmbedding",
     "MultipleEncodingsEmbeddingItem",
     "MxbaiApiError",

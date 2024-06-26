@@ -4,56 +4,59 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
+from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .data import Data
 from .embeddings_response_encoding_format import EmbeddingsResponseEncodingFormat
 from .object_type import ObjectType
 from .usage import Usage
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class EmbeddingsResponse(pydantic.BaseModel):
-    usage: Usage = pydantic.Field()
+class EmbeddingsResponse(pydantic_v1.BaseModel):
+    usage: Usage = pydantic_v1.Field()
     """
     The usage of the model
     """
 
-    model: str = pydantic.Field()
+    model: str = pydantic_v1.Field()
     """
     The model used
     """
 
-    data: Data = pydantic.Field()
+    data: Data = pydantic_v1.Field()
     """
-    The created embeddings.
+    The created embeddings
     """
 
-    object: typing.Optional[ObjectType] = pydantic.Field(default=None)
+    object: typing.Optional[ObjectType] = pydantic_v1.Field(default=None)
     """
     The object type of the response
     """
 
-    normalized: bool = pydantic.Field()
+    normalized: bool = pydantic_v1.Field()
     """
-    Whether the embeddings are normalized.
+    Whether the embeddings are normalized
     """
 
     encoding_format: EmbeddingsResponseEncodingFormat
-    dimensions: typing.Optional[int] = None
+    dimensions: typing.Optional[int] = pydantic_v1.Field(default=None)
+    """
+    The number of dimensions used for the embeddings. Only available for Matryoshka models.
+    """
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().dict(**kwargs_with_defaults)
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
 
     class Config:
         frozen = True
         smart_union = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
