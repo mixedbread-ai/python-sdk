@@ -160,25 +160,29 @@ class MixedbreadAI:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(EmbeddingsResponse, _response.json())  # type: ignore
-        if _response.status_code == 400:
-            raise BadRequestError(pydantic_v1.parse_obj_as(BadRequestErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 401:
-            raise UnauthorizedError(pydantic_v1.parse_obj_as(UnauthorizedErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 403:
-            raise ForbiddenError(pydantic_v1.parse_obj_as(ForbiddenErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 404:
-            raise NotFoundError(pydantic_v1.parse_obj_as(NotFoundErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic_v1.parse_obj_as(ValidationError, _response.json()))  # type: ignore
-        if _response.status_code == 429:
-            raise TooManyRequestsError(
-                pydantic_v1.parse_obj_as(TooManyRequestsErrorBody, _response.json())  # type: ignore
-            )
-        if _response.status_code == 500:
-            raise InternalServerError(pydantic_v1.parse_obj_as(InternalError, _response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(EmbeddingsResponse, _response.json())  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(pydantic_v1.parse_obj_as(BadRequestErrorBody, _response.json()))  # type: ignore
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    pydantic_v1.parse_obj_as(UnauthorizedErrorBody, _response.json())  # type: ignore
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(pydantic_v1.parse_obj_as(ForbiddenErrorBody, _response.json()))  # type: ignore
+            if _response.status_code == 404:
+                raise NotFoundError(pydantic_v1.parse_obj_as(NotFoundErrorBody, _response.json()))  # type: ignore
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    pydantic_v1.parse_obj_as(ValidationError, _response.json())  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    pydantic_v1.parse_obj_as(TooManyRequestsErrorBody, _response.json())  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(pydantic_v1.parse_obj_as(InternalError, _response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -245,25 +249,29 @@ class MixedbreadAI:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(RerankingResponse, _response.json())  # type: ignore
-        if _response.status_code == 400:
-            raise BadRequestError(pydantic_v1.parse_obj_as(BadRequestErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 401:
-            raise UnauthorizedError(pydantic_v1.parse_obj_as(UnauthorizedErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 403:
-            raise ForbiddenError(pydantic_v1.parse_obj_as(ForbiddenErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 404:
-            raise NotFoundError(pydantic_v1.parse_obj_as(NotFoundErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic_v1.parse_obj_as(ValidationError, _response.json()))  # type: ignore
-        if _response.status_code == 429:
-            raise TooManyRequestsError(
-                pydantic_v1.parse_obj_as(TooManyRequestsErrorBody, _response.json())  # type: ignore
-            )
-        if _response.status_code == 500:
-            raise InternalServerError(pydantic_v1.parse_obj_as(InternalError, _response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(RerankingResponse, _response.json())  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(pydantic_v1.parse_obj_as(BadRequestErrorBody, _response.json()))  # type: ignore
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    pydantic_v1.parse_obj_as(UnauthorizedErrorBody, _response.json())  # type: ignore
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(pydantic_v1.parse_obj_as(ForbiddenErrorBody, _response.json()))  # type: ignore
+            if _response.status_code == 404:
+                raise NotFoundError(pydantic_v1.parse_obj_as(NotFoundErrorBody, _response.json()))  # type: ignore
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    pydantic_v1.parse_obj_as(ValidationError, _response.json())  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    pydantic_v1.parse_obj_as(TooManyRequestsErrorBody, _response.json())  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(pydantic_v1.parse_obj_as(InternalError, _response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -394,25 +402,29 @@ class AsyncMixedbreadAI:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(EmbeddingsResponse, _response.json())  # type: ignore
-        if _response.status_code == 400:
-            raise BadRequestError(pydantic_v1.parse_obj_as(BadRequestErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 401:
-            raise UnauthorizedError(pydantic_v1.parse_obj_as(UnauthorizedErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 403:
-            raise ForbiddenError(pydantic_v1.parse_obj_as(ForbiddenErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 404:
-            raise NotFoundError(pydantic_v1.parse_obj_as(NotFoundErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic_v1.parse_obj_as(ValidationError, _response.json()))  # type: ignore
-        if _response.status_code == 429:
-            raise TooManyRequestsError(
-                pydantic_v1.parse_obj_as(TooManyRequestsErrorBody, _response.json())  # type: ignore
-            )
-        if _response.status_code == 500:
-            raise InternalServerError(pydantic_v1.parse_obj_as(InternalError, _response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(EmbeddingsResponse, _response.json())  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(pydantic_v1.parse_obj_as(BadRequestErrorBody, _response.json()))  # type: ignore
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    pydantic_v1.parse_obj_as(UnauthorizedErrorBody, _response.json())  # type: ignore
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(pydantic_v1.parse_obj_as(ForbiddenErrorBody, _response.json()))  # type: ignore
+            if _response.status_code == 404:
+                raise NotFoundError(pydantic_v1.parse_obj_as(NotFoundErrorBody, _response.json()))  # type: ignore
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    pydantic_v1.parse_obj_as(ValidationError, _response.json())  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    pydantic_v1.parse_obj_as(TooManyRequestsErrorBody, _response.json())  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(pydantic_v1.parse_obj_as(InternalError, _response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -479,25 +491,29 @@ class AsyncMixedbreadAI:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(RerankingResponse, _response.json())  # type: ignore
-        if _response.status_code == 400:
-            raise BadRequestError(pydantic_v1.parse_obj_as(BadRequestErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 401:
-            raise UnauthorizedError(pydantic_v1.parse_obj_as(UnauthorizedErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 403:
-            raise ForbiddenError(pydantic_v1.parse_obj_as(ForbiddenErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 404:
-            raise NotFoundError(pydantic_v1.parse_obj_as(NotFoundErrorBody, _response.json()))  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic_v1.parse_obj_as(ValidationError, _response.json()))  # type: ignore
-        if _response.status_code == 429:
-            raise TooManyRequestsError(
-                pydantic_v1.parse_obj_as(TooManyRequestsErrorBody, _response.json())  # type: ignore
-            )
-        if _response.status_code == 500:
-            raise InternalServerError(pydantic_v1.parse_obj_as(InternalError, _response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(RerankingResponse, _response.json())  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(pydantic_v1.parse_obj_as(BadRequestErrorBody, _response.json()))  # type: ignore
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    pydantic_v1.parse_obj_as(UnauthorizedErrorBody, _response.json())  # type: ignore
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(pydantic_v1.parse_obj_as(ForbiddenErrorBody, _response.json()))  # type: ignore
+            if _response.status_code == 404:
+                raise NotFoundError(pydantic_v1.parse_obj_as(NotFoundErrorBody, _response.json()))  # type: ignore
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    pydantic_v1.parse_obj_as(ValidationError, _response.json())  # type: ignore
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    pydantic_v1.parse_obj_as(TooManyRequestsErrorBody, _response.json())  # type: ignore
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(pydantic_v1.parse_obj_as(InternalError, _response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
